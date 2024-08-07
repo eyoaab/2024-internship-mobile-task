@@ -1,45 +1,43 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
+import 'package:task_6/core/Network/networl_info.dart';
 import 'package:task_6/core/error/exception.dart';
 import 'package:task_6/core/error/faliure.dart';
+import 'package:task_6/data/dataSource/local_product_source.dart';
 import 'package:task_6/data/dataSource/remote_product_source.dart';
+import 'package:task_6/domain/entitiy/product_entities.dart';
 import 'package:task_6/domain/repository/product_repository.dart';
 
-import '../../domain/entitiy/product_entities.dart';
+import '../model/product_model.dart';
 
-class ProductRepositoryImpl extends ProductRepository {
-  late ProductRemoteDataSource productRemoteDataSource;
-  ProductRepositoryImpl({required this.productRemoteDataSource});
+class ProductRepositoryImpl implements ProductRepository {
+  final ProductRemoteDataSource remoteDataSource;
+  final ProductLocalDataSource localDataSource;
+  final NetworkInfo networkInfo;
+
+  ProductRepositoryImpl({
+    required this.remoteDataSource,
+    required this.localDataSource,
+    required this.networkInfo,
+  });
 
   @override
-  Future<Either<Failure, void>> deleteProduct(int id) {
-    // TODO: implement deleteProduct
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, ProductEnities>> getProduct(String id) async {
-    try {
-      final result = await productRemoteDataSource.getProductById(id as int);
-      return Right(result.toEntity());
-    } on ServerException {
-      return const Left(ServerFailure('An error has occurred'));
-    } on SocketException {
-      return const Left(ConnectionFailure('Failed to connect to the network'));
+  Future<Either<Failure, ProductsModel>> getProducts() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteProducts = await remoteDataSource.getProductById(12);
+        localDataSource.cacheProduct(remoteProducts);
+        return  Right(remoteProducts);
+      } on ServerException {
+        return Left(ServerFailure('Failed to fetch data from server.'));
+      }
+    } else {
+      try {
+        final localProducts = await localDataSource.getCachedProducts();
+        return Right(localProducts[0]);
+      } on CacheException {
+        return Left(CacheFailure('No cached data available.'));
+      }
     }
-  }
-
-  @override
-  Future<Either<Failure, void>> insertProduct(ProductEnities product) {
-    // TODO: implement insertProduct
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Either<Failure, void>> updateProduct(ProductEnities product) {
-    // TODO: implement updateProduct
-    throw UnimplementedError();
   }
   
   @override
