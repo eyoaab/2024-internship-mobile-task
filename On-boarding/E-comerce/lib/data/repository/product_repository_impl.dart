@@ -28,14 +28,14 @@ class ProductRepositoryImpl implements ProductRepository {
         localDataSource.cacheProduct(remoteProducts);
         return  Right(remoteProducts);
       } on ServerException {
-        return Left(ServerFailure('Failed to fetch data from server.'));
+        return const Left(ServerFailure('Failed to fetch data from server.'));
       }
     } else {
       try {
         final localProducts = await localDataSource.getCachedProducts();
         return Right(localProducts[0]);
       } on CacheException {
-        return Left(CacheFailure('No cached data available.'));
+        return const Left(CacheFailure('No cached data available.'));
       }
     }
   }
