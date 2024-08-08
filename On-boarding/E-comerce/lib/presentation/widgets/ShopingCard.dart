@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/Widget_store.dart';
 
 class ShoppingCard extends StatelessWidget {
   final String assetPath;
@@ -18,7 +19,7 @@ class ShoppingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(16.0),
+      margin: eadge,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -37,24 +38,24 @@ class ShoppingCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            SizedBox(height: 10),
+            space(10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Text(
                     name,
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const  TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 Text(
                   '\$${price.toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, color: Colors.green, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            space(10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -66,14 +67,14 @@ class ShoppingCard extends StatelessWidget {
                 ),
                  Text(
                   '($rating)',
-                  style: TextStyle(fontSize: 16, color: const Color.fromARGB(255, 2, 2, 2), fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontSize: 16, color: const Color.fromARGB(255, 2, 2, 2), fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            space(10),
             Text(
               description,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              style: const  TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ],
         ),

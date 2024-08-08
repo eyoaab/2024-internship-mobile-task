@@ -34,11 +34,10 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
 
   // to get all products from the store
-    static const testUrl  = "https://g5-flutter-learning-path-be.onrender.com/api/v1/products";
 
   @override
     Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
-    final response = await client.get(Uri.parse(testUrl));
+    final response = await client.get(Uri.parse(Urls.baseUrl));
     if (response.statusCode == 200) {
       print("/////");
       print(json.decode(response.body));

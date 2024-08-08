@@ -13,9 +13,6 @@ abstract class ProductRepository {
 //The future shows they will implment later(they are asynchronous)
 //the thing in the "<>" shows their return type when they implment later
 // this is just a contract for the future implmented methods
-// 
-
-
 
   Future<Either<Failure, List<ProductEnities>>> getAllProducts();
   Future<Either<Failure,ProductEnities>> getProductById(int productId);

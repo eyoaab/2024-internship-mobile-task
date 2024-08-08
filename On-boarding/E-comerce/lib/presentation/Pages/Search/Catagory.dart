@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/Widget_store.dart';
 
 class Catagory extends StatefulWidget {
   @override
@@ -17,17 +18,17 @@ class _CatagoryState extends State<Catagory> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Catagory"),
+          const Text('Catagory'),
           TextField(
             controller: _categoryController,
             decoration: InputDecoration(
-              border: OutlineInputBorder(),
+              border: const OutlineInputBorder(),
               filled: true,
               fillColor: Colors.grey[200],
             ),
           ),
-          SizedBox(height: 16),
-          Text("Price"),
+          space(16),
+          const Text('Price'),
           RangeSlider(
             values: RangeValues(_minPrice, _maxPrice),
             min: 0,
@@ -44,7 +45,7 @@ class _CatagoryState extends State<Catagory> {
               });
             },
           ),
-          SizedBox(height: 16),
+          space(16),
           Center(
             child: ElevatedButton(
               onPressed: () {
@@ -64,9 +65,9 @@ class _CatagoryState extends State<Catagory> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Text('APPLAY',
+                  child: const Text('APPLAY',
                       style: TextStyle(
-                          color: const Color.fromARGB(255, 255, 255, 255))),
+                          color:  Color.fromARGB(255, 255, 255, 255))),
                 ),
               ),
             ),

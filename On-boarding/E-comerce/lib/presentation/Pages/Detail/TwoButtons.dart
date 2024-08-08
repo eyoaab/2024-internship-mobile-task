@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/Widget_store.dart';
 
 class Twobuttons extends StatelessWidget {
   @override
@@ -14,19 +15,19 @@ class Twobuttons extends StatelessWidget {
                 Navigator.pushNamed(context, '/');
               },
               style: ElevatedButton.styleFrom(),
-              child: Text('DELETE'),
+              child: const Text('DELETE'),
             ),
-            SizedBox(width: 16),
+            space(16),
             OutlinedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/');
 
               },
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Colors.blue),
+                side: const BorderSide(color: Colors.blue),
                 backgroundColor: Colors.blue,
               ),
-              child: Text(
+              child: const Text(
                 'UPDATE',
                 style: TextStyle(color: Colors.white),
               ),

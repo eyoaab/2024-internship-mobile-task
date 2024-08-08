@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/Widget_store.dart';
 
 class AddProduct extends StatelessWidget {
   @override
@@ -9,10 +10,11 @@ class AddProduct extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, '/',);
           },
-          child: Icon(Icons.arrow_back, color: Colors.blue),
+          child: const Icon(Icons.arrow_back, color: Colors.blue),
         ),
-        title: const Text("Add Product"),
+        title: const Text('Add Product'),
       ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -26,61 +28,48 @@ class AddProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
               ),
+
+
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.image, size: 40, color: Colors.grey[700]),
-                    SizedBox(height: 10),
-                    Text("Upload Image",
+                    space(10),
+                    Text('Upload Image',
                         style: TextStyle(color: Colors.grey[700])),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Text("Name",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            space(20),
+            
+            const Text('Name',
+                style: styleText),
             TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(),
-              ),
+              decoration: decorateInput,
             ),
-            SizedBox(height: 20),
-            Text("Category",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            space(20),
+           const  Text('Category',
+                style: styleText),
             TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(),
-              ),
+              decoration: decorateInput,
             ),
-            SizedBox(height: 20),
-            Text("Price",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            space(20),
+            const Text('Price',
+                style:  styleText),
             TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(),
-              ),
+              decoration: decorateInput,
               keyboardType: TextInputType.number,
             ),
-            SizedBox(height: 20),
-            Text("Description",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            space(20),
+            const Text('Description',
+                style: styleText),
             TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey[200],
-                border: OutlineInputBorder(),
-              ),
+              decoration: decorateInput,
               maxLines: 3,
             ),
-            SizedBox(height: 30),
+            space(30),
             Center(
               child: Column(
                 children: [
@@ -92,17 +81,15 @@ class AddProduct extends StatelessWidget {
                       },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(255, 3, 77, 138),
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: circular,
                       ),
-                      child: Text('ADD',
+                      child: const Text('ADD',
                           style: TextStyle(
-                              color: const Color.fromARGB(255, 255, 255, 255))),
+                              color:  Color.fromARGB(255, 255, 255, 255))),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  space(10),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: OutlinedButton(
@@ -110,14 +97,12 @@ class AddProduct extends StatelessWidget {
                         Navigator.pushNamed(context, '/');
                       },
                       style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: Colors.red, width: 2),
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        side: const BorderSide(color:red, width: 2),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: circular,
                       ),
                       child:
-                          Text('DELETE', style: TextStyle(color: Colors.red)),
+                          const Text('DELETE', style: TextStyle(color:red)),
                     ),
                   ),
                 ],

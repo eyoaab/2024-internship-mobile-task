@@ -13,9 +13,9 @@ class Detail extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, '/');
           },
-          child: Icon(Icons.arrow_back),
+          child: const Icon(Icons.arrow_back),
         ),
-        title: Text('Product Details'),
+        title: const Text('Product Details'),
       ),
       body: SingleChildScrollView(
         child: Column(

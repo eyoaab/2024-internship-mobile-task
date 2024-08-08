@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../Shared/ShopingCard.dart'; 
+import '../../widgets/ShopingCard.dart'; 
 
 class ShowProduct extends StatelessWidget {
   List<Map<String, dynamic>> products = [

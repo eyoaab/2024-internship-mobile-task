@@ -10,14 +10,14 @@ class Searchproduct extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
             ),
 
             //  Icon(Icons.arrow_back),
-            title: Text("Search Product")),
+            title: const Text('Search Product')),
         body: Column(
           children: [SearchComponent(), ShowProduct(), Catagory()],
         ));

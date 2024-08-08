@@ -18,11 +18,11 @@ class SearchComponent extends StatelessWidget {
                 ),
                 filled: true,
                 fillColor: Colors.grey[200],
-                contentPadding: EdgeInsets.symmetric(horizontal: 20.0),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
               ),
             ),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Container(
             decoration: BoxDecoration(
               color: Colors.blueAccent,
@@ -32,8 +32,8 @@ class SearchComponent extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, '/');
               },
-              icon: Icon(Icons.list, color: Colors.white),
-              padding: EdgeInsets.all(16.0),
+              icon: const Icon(Icons.list, color: Colors.white),
+              padding: const EdgeInsets.all(16.0),
             ),
           ),
         ],
