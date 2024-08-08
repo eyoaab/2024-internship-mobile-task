@@ -21,7 +21,6 @@ abstract class ProductRemoteDataSource {
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   final http.Client client;
   ProductRemoteDataSourceImpl({required this.client});
- /// for getting one products from the remote data source
   @override
   Future<ProductsModel> getProductById(int id) async {
     final response = await client.get(Uri.parse(Urls.getProduct(id)));
@@ -35,11 +34,14 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
 
   // to get all products from the store
+    static const testUrl  = "https://g5-flutter-learning-path-be.onrender.com/api/v1/products";
 
   @override
     Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
-    final response = await client.get(Uri.parse('un defined end point'));
+    final response = await client.get(Uri.parse(testUrl));
     if (response.statusCode == 200) {
+      print("/////");
+      print(json.decode(response.body));
       
       return Right(json.decode(response.body));
     } else {
@@ -115,7 +117,5 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
 
 }
-
-
 
 

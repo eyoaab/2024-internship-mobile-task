@@ -83,7 +83,7 @@ void main() {
         await repository.getAllProducts();
         // assert
         verify(mockRemoteDataSource.getProductById(any));
-        verify(mockLocalDataSource.cacheProduct(tProductModel));
+        verify(mockLocalDataSource.getStoredProducts());
       });
 
       test('should return server failure when the call to remote data source is unsuccessful', () async {
@@ -102,24 +102,24 @@ void main() {
     runTestsOffline(() {
       test('should return last locally cached data when the cached data is present', () async {
         // arrange
-        when(mockLocalDataSource.getCachedProducts())
+        when(mockLocalDataSource.getStoredProducts())
             .thenAnswer((_) async => [tProductModel]);
         // act
         final result = await repository.getAllProducts();
         // assert
         verifyZeroInteractions(mockRemoteDataSource);
-        verify(mockLocalDataSource.getCachedProducts());
+        verify(mockLocalDataSource.getStoredProducts());
         expect(result, equals(Right(tProductModel)));
       });
 
       test('should return CacheFailure when there is no cached data present', () async {
         // arrange
-        when(mockLocalDataSource.getCachedProducts()).thenThrow(CacheException());
+        when(mockLocalDataSource.getStoredProducts()).thenThrow(CacheException());
         // act
         final result = await repository.getAllProducts();
         // assert
         verifyZeroInteractions(mockRemoteDataSource);
-        verify(mockLocalDataSource.getCachedProducts());
+        verify(mockLocalDataSource.getStoredProducts());
         expect(result, equals(const Left(CacheFailure('No cached data available.'))));
       });
     });

@@ -23,15 +23,15 @@ void main() {
   });
 
   group('getProductById', () {
-    final tId = 1;
-    final tProductModel = ProductsModel(
+    const tId = 1;
+    const  tProductModel = ProductsModel(
       id: tId,
       name: 'Test Product',
       description: 'Test Description',
       imageUrl: 'http://example.com/image.jpg',
       price: 99.99,
     );
-
+   
     test('should perform a GET request on a URL with the id being the endpoint', () async {
       // arrange
       when(mockHttpClient.get(any))
@@ -49,7 +49,6 @@ void main() {
       when(mockHttpClient.get(any))
           .thenAnswer((_) async => http.Response(json.encode(tProductModel.toJson()), 200));
 
-      // act
       final result = await dataSource.getProductById(tId);
 
       // assert
@@ -57,15 +56,26 @@ void main() {
     });
 
     test('should throw a ServerException when the response code is not 200', () async {
-      // arrange
-      when(mockHttpClient.get(any))
-          .thenAnswer((_) async => http.Response('Something went wrong', 404));
-
-      // act
-      final call = dataSource.getProductById;
+   
+      // when(mockHttpClient.get(any))
+          // .thenAnswer((_) async => http.Response('Something went wrong', 404));
+      when(mockHttpClient.get(any)).thenAnswer((_)async => http.Response('try this',404));     // act
+      final result = dataSource.getProductById(tId);
 
       // assert
-      expect(() => call(tId), throwsA(isA<ServerException>()));
+      expect(result, throwsA(isA<ServerException>()));
+    });
+    
+
+    test('should return the right data', () async {
+   
+      // when(mockHttpClient.get(any))
+          // .thenAnswer((_) async => http.Response('Something went wrong', 404));
+      // when(mockHttpClient.get(any)).thenAnswer((_)async => http.Response('try this',404));     // act
+      final result = dataSource.getAllProduct();
+
+      // assert
+      expect(result, 1);
     });
   });
 }
