@@ -1,6 +1,7 @@
 import '../../domain/entitiy/product_entities.dart';
 
 class ProductsModel extends ProductEnities {
+  // it extends because it is an ebtity we use ut for exchange a product
   const ProductsModel({
     required int id,
     required String name,
@@ -47,7 +48,7 @@ class ProductsModel extends ProductEnities {
     );
   }
 
-  // Method to convert ProductsModel to ProductEntities
+  // Method to convert ProductsModel to ProductEntities just if we need
   ProductEnities toEntity() {
     return ProductEnities(
       id: id,

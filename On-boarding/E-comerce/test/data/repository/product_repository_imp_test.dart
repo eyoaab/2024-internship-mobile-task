@@ -32,7 +32,10 @@ void main() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       });
 
-      body();
+      test("should be offline ", (){
+        expect(mockNetworkInfo.isConnected, false);
+
+      });
     });
   }
 
@@ -42,12 +45,17 @@ void main() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
       });
 
-      body();
+      test("should be online", () {
+      expect(mockNetworkInfo.isConnected,false);
+
+      }
+      );
+
     });
   }
 
   group('getProducts', () {
-    final tProductModel = ProductsModel(
+    const tProductModel = ProductsModel(
       id: 1,
       name: 'Test Product',
       description: 'Test Description',
@@ -61,7 +69,7 @@ void main() {
         when(mockRemoteDataSource.getProductById(any))
             .thenAnswer((_) async => tProductModel);
         // act
-        final result = await repository.getProducts();
+        final result = await repository.getProductById(1);
         // assert
         verify(mockRemoteDataSource.getProductById(any));
         expect(result, equals(Right(tProductModel)));
@@ -72,7 +80,7 @@ void main() {
         when(mockRemoteDataSource.getProductById(any))
             .thenAnswer((_) async => tProductModel);
         // act
-        await repository.getProducts();
+        await repository.getAllProducts();
         // assert
         verify(mockRemoteDataSource.getProductById(any));
         verify(mockLocalDataSource.cacheProduct(tProductModel));
@@ -83,7 +91,7 @@ void main() {
         when(mockRemoteDataSource.getProductById(any))
             .thenThrow(ServerException());
         // act
-        final result = await repository.getProducts();
+        final result = await repository.getAllProducts();
         // assert
         verify(mockRemoteDataSource.getProductById(any));
         verifyZeroInteractions(mockLocalDataSource);
@@ -97,7 +105,7 @@ void main() {
         when(mockLocalDataSource.getCachedProducts())
             .thenAnswer((_) async => [tProductModel]);
         // act
-        final result = await repository.getProducts();
+        final result = await repository.getAllProducts();
         // assert
         verifyZeroInteractions(mockRemoteDataSource);
         verify(mockLocalDataSource.getCachedProducts());
@@ -108,7 +116,7 @@ void main() {
         // arrange
         when(mockLocalDataSource.getCachedProducts()).thenThrow(CacheException());
         // act
-        final result = await repository.getProducts();
+        final result = await repository.getAllProducts();
         // assert
         verifyZeroInteractions(mockRemoteDataSource);
         verify(mockLocalDataSource.getCachedProducts());

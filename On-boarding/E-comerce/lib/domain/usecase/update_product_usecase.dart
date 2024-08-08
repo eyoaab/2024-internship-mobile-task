@@ -12,7 +12,8 @@ class UpdateProductUsecase extends Equatable{
 
 
 /// call_ is a prefix i add to mention thet it is a call by the usecase
-  Future<Either<Failure, ProductEnities>> call_update(int productId, ProductEnities product){
+/// i have added this call in all use cases
+  Future<Either<Failure, bool>> call_update(int productId, ProductEnities product){
 
     return productRepository.ProductUpdate(productId,product);
   }

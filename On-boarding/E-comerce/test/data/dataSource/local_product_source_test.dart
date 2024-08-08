@@ -31,7 +31,7 @@ void main() {
       when(mockSharedPreferences.getStringList('cachedProducts')).thenReturn(jsonList);
       when(mockSharedPreferences.setStringList('cachedProducts',[])).thenAnswer((_) async => true);
 
-      final result = await dataSource.cacheProduct(product);
+      final result = await dataSource.storeProduct(product);
 
       final expectedJson = jsonEncode(product.toJson());
       verify(mockSharedPreferences.setStringList('cachedProducts', [expectedJson])).called(1);
@@ -54,7 +54,7 @@ void main() {
       when(mockSharedPreferences.getStringList('cachedProducts')).thenReturn(jsonList);
 
    
-      final result = await dataSource.getCachedProducts();
+      final result = await dataSource.getStoredProducts();
 
      
       expect(result, [product]);
@@ -65,7 +65,7 @@ void main() {
       when(mockSharedPreferences.getStringList('cachedProducts')).thenReturn(null);
 
 
-      final call = dataSource.getCachedProducts;
+      final call = dataSource.getStoredProducts;
 
     
       expect(() => call(), throwsA(isA<CacheException>()));

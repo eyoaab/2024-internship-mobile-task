@@ -10,7 +10,7 @@ class DeleteProductbyidUsecase  extends Equatable {
     final int id;
     const DeleteProductbyidUsecase({required this.productRepository,required this.id});
 
-    Future<Either<Failure,ProductEnities>> call_delete(int productId){
+    Future<Either<Failure, bool>> call_delete(int productId){
       return productRepository.ProductDelete(productId);
     }
     @override
