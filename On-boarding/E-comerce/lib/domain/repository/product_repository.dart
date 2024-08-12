@@ -8,7 +8,7 @@ import '../entitiy/product_entities.dart';
 abstract class ProductRepository {
 
 
-
+// and also the class is an abstract class
   //added a future methods for implmenting later 
 //The future shows they will implment later(they are asynchronous)
 //the thing in the "<>" shows their return type when they implment later

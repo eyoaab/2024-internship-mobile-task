@@ -14,9 +14,9 @@ class AddProducctUsecase extends Equatable{
   const AddProducctUsecase({required this.product,required this.productRepository});
 
 
- Future<Future<Either<Failure, bool>>> call_add() async {
+ Future<Either<Failure, bool>> call_add() async {
     return productRepository.ProductAdd(product);}
   
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [product,productRepository];
 }

@@ -15,8 +15,7 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
 
   @override
   Future<bool> storeProduct(ProductsModel productToStore) async {
-    final List<String> jsonList = store.getStringList('savedProducts') ?? [];
-    
+    final List<String> jsonList = store.getStringList('savedProducts') ?? [];  
     final productJson = jsonEncode(productToStore.toJson());
     jsonList.add(productJson);
 
@@ -39,8 +38,10 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
       return jsonList
           .map((jsonString) => ProductsModel.fromJson(jsonDecode(jsonString)))
           .toList();
+    }else{
+    throw CacheException();
+
     }
 
-    throw CacheException();
   }
 }

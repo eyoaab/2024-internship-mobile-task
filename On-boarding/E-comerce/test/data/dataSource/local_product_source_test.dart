@@ -98,6 +98,7 @@ void main() {
 
       // Assert
       expect(() => call(), throwsA(isA<CacheException>()));
+      // verify(call);
     });
   });
 }

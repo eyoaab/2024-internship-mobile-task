@@ -14,7 +14,7 @@ class DeleteProductbyidUsecase  extends Equatable {
       return productRepository.ProductDelete(productId);
     }
     @override
-    List<Object> get props => [id];
+    List<Object> get props => [id,ProductRepository];
 
 
 }

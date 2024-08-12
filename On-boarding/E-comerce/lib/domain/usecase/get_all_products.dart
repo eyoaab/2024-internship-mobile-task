@@ -13,6 +13,7 @@ class AllProductUsecase extends Equatable{
 
   Future<Either<Failure, List<ProductEnities>>> call_AllProducts(){
     return productRepository.getAllProducts();
+    
   }
 
    @override

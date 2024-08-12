@@ -15,12 +15,13 @@ abstract class ProductRemoteDataSource {
   Future<Either<Failure, bool>> ProductAdd(ProductEnities product);
   Future<Either<Failure, bool>> ProductDelete(int productId);
   Future<Either<Failure, bool>> ProductUpdate(int productId, ProductEnities product);
-   Future<Either<Failure, List<ProductsModel>>> getAllProduct() ;
+  Future<Either<Failure, List<ProductsModel>>> getAllProduct() ;
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
-  final http.Client client;
+  final http.Client client;//to make requests to the server
   ProductRemoteDataSourceImpl({required this.client});
+
   @override
   Future<ProductsModel> getProductById(int id) async {
     final response = await client.get(Uri.parse(Urls.getProduct(id)));
@@ -39,7 +40,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
     final response = await client.get(Uri.parse(Urls.baseUrl));
     if (response.statusCode == 200) {
-      print("/////");
+      // print("/////");
       print(json.decode(response.body));
       
       return Right(json.decode(response.body));
@@ -64,8 +65,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
       headers: {'Content-Type': 'application/json'},
     );    
     if (response.statusCode == 200) {
-      // return ProductsModel.fromJson(json.decode(response.body));
-      // retu
+    
       return const Right(true); 
     } else {
       throw ServerException();
@@ -78,13 +78,14 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
      @override
   Future<Either<Failure, bool>> ProductDelete(int productId,) async {
     final response = await client.put(
-      Uri.parse('url to upddate product'),
+      Uri.parse('url to delete product '),
+      body:productId.toString(),
       headers: {'Content-Type': 'application/json'},
     );    
     if (response.statusCode == 200) {
       // return ProductsModel.fromJson(json.decode(response.body));
       
-      return Right(true); 
+      return const Right(true); 
     } else {
       throw ServerException();
     }    

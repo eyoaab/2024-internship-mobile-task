@@ -49,7 +49,7 @@ class ProductRepositoryImpl implements ProductRepository {
   
   @override
   Future<Either<Failure,ProductEnities>> getProductById(int productId) async{
-    // just call the function to get all products from network or local daata
+    // just call the function to get all products from network or local data
     if (await networkInfo.isConnected) {
       try {
         final remoteProducts = await remoteDataSource.getProductById(productId);
