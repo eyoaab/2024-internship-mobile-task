@@ -4,27 +4,21 @@ import '../../domain/entitiy/product_entities.dart';
 class ProductEvent {}
 
 class LoadAllProductEvent extends ProductEvent{
-  List<ProductEnities> products;
-  LoadAllProductEvent(this.products);
 }
 
 class GetSingleProductEvent extends ProductEvent{
-  String productId;
-  ProductEnities product;
-  GetSingleProductEvent(this.productId, this.product);
-
+  String Id;
+  GetSingleProductEvent(this.Id);
 }
 
 class UpdateProductEvent extends ProductEvent{
-  String productId;
-  ProductEnities product;
-  UpdateProductEvent(this.productId, this.product);
-
+ ProductEnities product;
+  UpdateProductEvent(this.product);
 }
 
 class DeleteProductEvent extends ProductEvent{
-  String productId;
-  DeleteProductEvent(this.productId);
+  String Id;
+  DeleteProductEvent(this.Id);
 }
 
 class AddProductEvent extends ProductEvent{
