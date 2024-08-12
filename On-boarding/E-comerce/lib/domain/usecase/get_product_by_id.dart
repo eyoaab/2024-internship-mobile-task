@@ -9,7 +9,7 @@ class ShowProductById extends Equatable{
   final ProductRepository productRepository;
   const ShowProductById({required this.id,required this.productRepository});
 
-  Future<Either<Failure,ProductEnities>> show(int productId){
+  Future<Either<Failure,ProductEnities>> call_show(int productId){
     return productRepository.getProductById(productId);
 
   }

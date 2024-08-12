@@ -23,3 +23,8 @@ class ErrorState extends ProductState{
     final String message;
   ErrorState({required this.message}) : super([message]);
 }
+
+class UpdatedState extends ProductState{}
+class DeletedState extends ProductState{}
+class AddState extends ProductState{}
+
