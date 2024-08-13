@@ -6,8 +6,10 @@ import '../../domain/usecase/delete_product_usecase.dart';
 import '../../domain/usecase/get_all_products.dart';
 import '../../domain/usecase/get_product_by_id.dart';
 import '../../domain/usecase/update_product_usecase.dart';
+
 import './product_event.dart';
 import './product_state.dart';
+
 
 
  
@@ -91,3 +93,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     });//done
   }
 }
+
+class ProductBloc extends Bloc<ProductEvents, ProductState> {
+  ProductBloc() : super(InitialState()) {
+
+    on<LoadAllProductEvents>((event, emit) {});
+    on<GetSingleProductEvents>((event, emit) {});
+    on<UpdateProductEvent>((event, emit) {});
+    on<DeleteProductEvent>((event, emit) {});
+    on<CreateProductEvent>((event, emit) {});
+
+
+  }
+}
+

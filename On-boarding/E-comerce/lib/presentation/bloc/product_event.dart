@@ -50,3 +50,31 @@ class AddProductEvent extends ProductEvent{
   @override
   List<Object> get props => [product];
 }
+=======
+abstract class ProductEvents {}
+
+class LoadAllProductEvents extends ProductEvents {
+   LoadAllProductEvents();
+}
+
+class GetSingleProductEvents extends ProductEvents {
+  int productid;
+  GetSingleProductEvents(this.productid);
+}
+
+class UpdateProductEvent extends ProductEvents {
+  int productid;
+  ProductEnities product;
+  UpdateProductEvent(this.productid, this.product);
+}
+
+class DeleteProductEvent extends ProductEvents {
+  int productid;
+  DeleteProductEvent(this.productid);
+
+}
+
+class CreateProductEvent extends ProductEvents {
+  ProductEnities product;
+  CreateProductEvent(this.product);
+}
