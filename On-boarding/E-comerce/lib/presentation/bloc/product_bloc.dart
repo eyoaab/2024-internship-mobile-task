@@ -16,19 +16,21 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final ShowProductById getProductByIdUseCase;
     final UpdateProductUsecase updateProductUseCase;
     final DeleteProductbyidUsecase deleteProductUseCase;
-    final AddProducctUsecase addProductUseCase;
+    final AddProductUsecase addProductUseCase;
 
 
-  ProductBloc( this.getAllProductsUseCase,
-                 this.getProductByIdUseCase,
-                 this.updateProductUseCase,
-                 this.deleteProductUseCase,
-                 this.addProductUseCase
-                ): super(IntialState()) {
+  ProductBloc({ required this.getAllProductsUseCase,
+                 required this.getProductByIdUseCase,
+                 required this.updateProductUseCase,
+                 required this.deleteProductUseCase,
+                 required this.addProductUseCase
+                }): super(IntialState()) {
       on<LoadAllProductEvent>((event,emit) async{
-           
+
               emit(LoadingState());
+              'waiting to get';
               final result = await getAllProductsUseCase.call_AllProducts();
+              print(result);
               result.fold(
               (error) => emit(ErrorState(message: error.toString())),             
                (products) => emit(LoadedAllProductState(data: products)),
@@ -88,56 +90,4 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     });//done
   }
-
-
-
-// void _LoadAllProductEvent(LoadAllProductEvent event, Emitter<ProductState> emit) async {
-//   final AllProductUsecase getAllProductsUseCase = AllProductUsecase(productRepository: );
-
-//   try{
-    
-//   emit(LoadingState());
-//   final result = await getAllProductsUseCase.call_AllProducts();
-//   result.fold(
-//     (error) => emit(ErrorState(message: error.toString())),
-    
-//     (products) => emit(LoadedAllProductState(data: products)),
-
-//   );
-  
-
-//   }
-//   catch(e){
-//     emit(ErrorState(message:  e.toString()));
-//   }
-// }
-
-
-
-
-
-
-
-
-
-// void _GetSingleProductEvent(GetSingleProductEvent event, Emitter<ProductState> emit) {
-//   final ShowProductById getProductByIdUseCase;
-
-// }
-
-// void _UpdateProductEvent(UpdateProductEvent event, Emitter<ProductState> emit) {
-//   final UpdateProductUsecase updateProductUseCase;
-// }
-
-// void _DeleteProductEvent(DeleteProductEvent event, Emitter<ProductState> emit) {
-//   final DeleteProductbyidUsecase deleteProductUseCase;
-
-// }
-
-// void _AddProductEvent(AddProductEvent event, Emitter<ProductState> emit) {
-//   final AddProducctUsecase addProductUseCase;
-
-// }
-
 }
-

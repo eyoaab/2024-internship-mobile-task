@@ -1,61 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/product_bloc.dart';
+import '../../bloc/product_event.dart';
+import '../../bloc/product_state.dart';
 import '../../widgets/ShopingCard.dart';
 
 class ShowProduct extends StatelessWidget {
-  final List<Map<String, dynamic>> products = [
-    {  
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Smartphone',
-      'description': 'A high-end smartphone with a great camera.',
-      'price': 0,
-      'rating': 4,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Laptop',
-      'description': 'A powerful laptop for gaming and work.',
-      'price': 10,
-      'rating': 4,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Headphones',
-      'description': 'Noise-cancelling over-ear headphones.',
-      'price': 0,
-      'rating': 4,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Smartwatch',
-      'description': 'A smartwatch with fitness tracking features.',
-      'price': 2490,
-      'rating': 4,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Tablet',
-      'description': 'A lightweight tablet with a stunning display.',
-      'price': 0,
-      'rating': 4,
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (context, index) {
-          final product = products[index];
-          return ShoppingCard(
-            assetPath: product['assetPath'],
-            name: product['name'],
-            price: product['price'],
-            rating: product['rating'],
-            description: product['description'],
+    // Triggering the LoadAllProductEvent to load the products
+    context.read<ProductBloc>().add(const LoadAllProductEvent());
+        
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        if (state is LoadingState) {
+        print(" the state is loading");
+
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is LoadedAllProductState) {
+        print(" the state is loaded");
+
+          return Expanded(
+            child: ListView.builder(
+              itemCount: state.data.length,
+              itemBuilder: (context, index) {
+                final product = state.data[index];
+                return ShoppingCard(
+                  // assetPath: product.imageUrl,
+                  assetPath: 'assets/boots.jpg',
+
+
+                  name: product.name,
+                  price: product.price,
+                  rating: 2,
+                  description: product.description,
+                );
+              },
+            ),
           );
-        },
-      ),
+        } else if (state is ErrorState) {
+        print(" the state is errr ${state}");
+
+          return  Center(child: Text('Failed to load products: ${state.message}'));
+        } else {
+        print("no avaliuble state");
+
+          return const Center(child: Text('No products available.'));
+        }
+      },
     );
   }
 }

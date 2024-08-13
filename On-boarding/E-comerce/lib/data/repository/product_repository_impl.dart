@@ -1,4 +1,4 @@
-/// this page is the implmentation for the above repository(in a domain layer)
+/// required this page is the implmentation for the above repository(in a domain layer)
 
 import 'package:dartz/dartz.dart';
 import 'package:task_6/core/Network/networl_info.dart';
@@ -19,19 +19,18 @@ class ProductRepositoryImpl implements ProductRepository {
   final NetworkInfo networkInfo;
   // for detecting weather the user  is connected or not
 
-  ProductRepositoryImpl({//constructor for the repository
-    required this.remoteDataSource,
-    required this.localDataSource,
-    required this.networkInfo,
-  });
+  ProductRepositoryImpl(//constructor for the repository
+     {required this.remoteDataSource,
+     required this.localDataSource,
+     required this.networkInfo,}
+  );
 
   @override
   Future<Either<Failure, List<ProductsModel>>> getAllProducts() async {
-    // just call the function to get all products from network or local daata
     if (await networkInfo.isConnected) {
       try {
         final remoteProducts = await remoteDataSource.getAllProduct();
-        // localDataSource.storeProduct(remoteProducts[0]);
+        
         return  Right(remoteProducts as List<ProductsModel>);
       } on ServerException {
         return const Left(ServerFailure('Failed to fetch data from server.'));

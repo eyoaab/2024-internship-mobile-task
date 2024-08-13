@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_6/core/error/exception.dart';
+import '../../core/error/exception.dart';
 import '../model/product_model.dart';
 
 abstract class ProductLocalDataSource {

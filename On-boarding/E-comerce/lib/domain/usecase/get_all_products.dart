@@ -9,7 +9,7 @@ import '../repository/product_repository.dart';
 class AllProductUsecase extends Equatable{
 
   final ProductRepository productRepository;
-  const AllProductUsecase({required this.productRepository});
+  const AllProductUsecase( this.productRepository);
 
   Future<Either<Failure, List<ProductEnities>>> call_AllProducts(){
     return productRepository.getAllProducts();

@@ -19,8 +19,8 @@ abstract class ProductRemoteDataSource {
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
-  final http.Client client;//to make requests to the server
-  ProductRemoteDataSourceImpl({required this.client});
+  final http.Client client;
+  ProductRemoteDataSourceImpl( this.client);
 
   @override
   Future<ProductsModel> getProductById(int id) async {
