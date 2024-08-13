@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'presentation/Pages/home/Home.dart';
-import 'presentation/Pages/Detail/Detail.dart';
+
 import 'presentation/Pages/AddProduct/AddProduct.dart';
+import 'presentation/Pages/Detail/Detail.dart';
 import 'presentation/Pages/Search/SearchProduct.dart';
+import 'presentation/Pages/home/Home.dart';
 
 void main() {
   runApp(MyApp());
