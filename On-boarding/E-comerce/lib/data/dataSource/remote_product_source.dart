@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
-import 'package:task_6/core/constants/Url/url.dart';
-import 'package:task_6/core/error/exception.dart';
-import 'package:task_6/domain/entitiy/product_entities.dart';
 
+import '../../core/constants/Url/url.dart';
+import '../../core/error/exception.dart';
 import '../../core/error/faliure.dart';
+import '../../domain/entitiy/product_entities.dart';
 import '../model/product_model.dart';
 
 
@@ -24,7 +24,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
   @override
   Future<ProductsModel> getProductById(int id) async {
-    final response = await client.get(Uri.parse(Urls.getProduct(id)));
+    final response = await client.get(Uri.parse(Urls.getByUrl(id)));
 
     if (response.statusCode == 200) {
       return ProductsModel.fromJson(json.decode(response.body));
@@ -38,7 +38,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
   @override
     Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
-    final response = await client.get(Uri.parse(Urls.baseUrl));
+    final response = await client.get(Uri.parse(Urls.getAll()));
     if (response.statusCode == 200) {
       // print("/////");
       print(json.decode(response.body));
@@ -53,6 +53,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     @override
   Future<Either<Failure, bool>> ProductUpdate(int productId, ProductEnities product) async {
     final Map<String, String> data = {
+      'id':product.id.toString(),
       'image': product.imageUrl,
       'name': product.name,
       'description': product.description,
@@ -60,7 +61,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     };
 
     final response = await client.put(
-      Uri.parse('url to upddate product'),
+      Uri.parse(Urls.updateProduct(productId)),
       body: json.encode(data),
       headers: {'Content-Type': 'application/json'},
     );    
@@ -78,7 +79,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
      @override
   Future<Either<Failure, bool>> ProductDelete(int productId,) async {
     final response = await client.put(
-      Uri.parse('url to delete product '),
+      Uri.parse(Urls.deleteProduct(productId)),
       body:productId.toString(),
       headers: {'Content-Type': 'application/json'},
     );    
@@ -101,8 +102,8 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
     };
     
     final response = await client.put(
-      Uri.parse('url to add product'),
-      headers: data,
+      Uri.parse(Urls.addNewProduct()),
+      body: data,
 
     );  
     if (response.statusCode == 200) {

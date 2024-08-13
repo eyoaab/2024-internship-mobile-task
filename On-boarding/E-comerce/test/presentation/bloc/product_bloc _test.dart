@@ -12,6 +12,7 @@ import 'package:task_6/presentation/bloc/product_state.dart';
 import '../../helper/helper.mocks.dart';
 
 void main() {
+
   late MockAllProductUsecase mockAllProductUsecase;
   late MockShowProductById mockShowProductById;
   late MockUpdateProductUsecase mockUpdateProductUsecase;
@@ -37,6 +38,7 @@ void main() {
   test('the initial state should be empty', () {
     expect(productBloc.state, IntialState());
   });
+// to test show all product bloc
 
   blocTest<ProductBloc, ProductState>(
     'should emit [LoadingState] and LoadedAllProductState]',
@@ -50,6 +52,8 @@ void main() {
        LoadedAllProductState(data: tempData),
     ],
   );
+
+  
 
  /// test for get product by id 
  

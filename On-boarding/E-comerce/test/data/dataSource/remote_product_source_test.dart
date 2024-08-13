@@ -41,7 +41,7 @@ void main() {
       await dataSource.getProductById(tId);
 
       // assert
-      verify(mockHttpClient.get(Uri.parse(Urls.getProduct(tId))));
+      verify(mockHttpClient.get(Uri.parse(Urls.getByUrl(tId))));
     });
 
     test('should return ProductsModel when the response code is 200 (success)', () async {

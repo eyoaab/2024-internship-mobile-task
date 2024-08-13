@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
+import 'Description.dart';
 import 'DetailPageUpperComponent.dart';
 import 'NumbersRow.dart';
-import 'Description.dart';
 import 'TwoButtons.dart';
 
 class Detail extends StatelessWidget {
@@ -21,7 +22,8 @@ class Detail extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Detailpageuppercomponent(
+            // pass data over here
+           const  Detailpageuppercomponent(
               path: 'assets/boots.jpg',
               title: 'Stylish Boots',
               description: 'These stylish boots are perfect for any occasion.',
