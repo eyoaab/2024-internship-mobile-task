@@ -20,7 +20,7 @@ class LoadAllProductEvent extends ProductEvent{
 }
 
 class GetSingleProductEvent extends ProductEvent{
-  String Id;
+  int Id;
   GetSingleProductEvent(this.Id);
 
   @override
@@ -36,7 +36,7 @@ class UpdateProductEvent extends ProductEvent{
 }
 
 class DeleteProductEvent extends ProductEvent{
-  String Id;
+  int Id;
   DeleteProductEvent(this.Id);
 
   @override
