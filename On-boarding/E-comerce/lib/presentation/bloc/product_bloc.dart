@@ -13,104 +13,101 @@ import './product_state.dart';
  
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final AllProductUsecase getAllProductsUseCase;
-    final ShowProductById getProductByIdUseCase;
-    final UpdateProductUsecase updateProductUseCase;
-    final DeleteProductbyidUsecase deleteProductUseCase;
-    final AddProducctUsecase addProductUseCase;
+    // final ShowProductById getProductByIdUseCase;
+    // final UpdateProductUsecase updateProductUseCase;
+    // final DeleteProductbyidUsecase deleteProductUseCase;
+    // final AddProducctUsecase addProductUseCase;
 
 
-  ProductBloc({required this.getAllProductsUseCase
-                ,required this.getProductByIdUseCase
-                ,required this.updateProductUseCase,
-                required this.deleteProductUseCase,
-                required this.addProductUseCase}): super(IntialState()) {
+  ProductBloc( this.getAllProductsUseCase
+                // ,required this.getProductByIdUseCase
+                // ,required this.updateProductUseCase,
+                // required this.deleteProductUseCase,
+                // required this.addProductUseCase
+                ): super(IntialState()) {
       on<LoadAllProductEvent>((event,emit) async{
-           try{
+           
               emit(LoadingState());
               final result = await getAllProductsUseCase.call_AllProducts();
               result.fold(
               (error) => emit(ErrorState(message: error.toString())),             
                (products) => emit(LoadedAllProductState(data: products)),
               ); 
-              }
-            catch(e){
-                emit(ErrorState(message:  e.toString()));
-              }
-
+              
       });
 
 
 
-    on<GetSingleProductEvent>((event,emit) async{
-      try{
-        emit(LoadingState());
-        final result = await getProductByIdUseCase.call_show(int.parse(event.Id));
+    // on<GetSingleProductEvent>((event,emit) async{
+    //   try{
+    //     emit(LoadingState());
+    //     final result = await getProductByIdUseCase.call_show(int.parse(event.Id));
 
-             result.fold(
-              (error) => emit(ErrorState(message: error.toString())),             
-               (product) => emit(LoadedSingleProductState(product: product)),
-              );
-      }
-      catch(e){
-        emit(ErrorState(message: e.toString()));
-      }
+    //          result.fold(
+    //           (error) => emit(ErrorState(message: error.toString())),             
+    //            (product) => emit(LoadedSingleProductState(product: product)),
+    //           );
+    //   }
+    //   catch(e){
+    //     emit(ErrorState(message: e.toString()));
+    //   }
 
-    });// done
-
-
-
-
-    on<UpdateProductEvent>((event,emit) async{
-      try{
-        emit(LoadingState());
-        final result = await updateProductUseCase.call_update(event.product.id,event.product);
-
-             result.fold(
-              (error) => emit(ErrorState(message: error.toString())),             
-               (product) => emit(UpdatedState())
-              );
-      }
-      catch(e){
-        emit(ErrorState(message: e.toString()));
-      }
-    });// done
+    // });// done
 
 
 
 
-    on<DeleteProductEvent>((event,emit)async{
+    // on<UpdateProductEvent>((event,emit) async{
+    //   try{
+    //     emit(LoadingState());
+    //     final result = await updateProductUseCase.call_update(event.product.id,event.product);
 
-         try{
-        emit(LoadingState());
-        final result = await deleteProductUseCase.call_delete(int.parse(event.Id));
-
-             result.fold(
-              (error) => emit(ErrorState(message: error.toString())),             
-               (product) => emit(DeletedState())
-              );
-      }
-      catch(e){
-        emit(ErrorState(message: e.toString()));
-      }
+    //          result.fold(
+    //           (error) => emit(ErrorState(message: error.toString())),             
+    //            (product) => emit(UpdatedState())
+    //           );
+    //   }
+    //   catch(e){
+    //     emit(ErrorState(message: e.toString()));
+    //   }
+    // });// done
 
 
-    });// done
 
-    on<AddProductEvent>((event,emit) async{
-      try{
-        emit(LoadingState());
-        final result = await addProductUseCase.call_add(event.product);
 
-             result.fold(
-              (error) => emit(ErrorState(message: error.toString())),             
-               (product) => emit(AddState())
-              );
-      }
-      catch(e){
-        emit(ErrorState(message: e.toString()));
-      }
+    // on<DeleteProductEvent>((event,emit)async{
 
-    });//done
+    //      try{
+    //     emit(LoadingState());
+    //     final result = await deleteProductUseCase.call_delete(int.parse(event.Id));
+
+    //          result.fold(
+    //           (error) => emit(ErrorState(message: error.toString())),             
+    //            (product) => emit(DeletedState())
+    //           );
+    //   }
+    //   catch(e){
+    //     emit(ErrorState(message: e.toString()));
+    //   }
+
+
+    // });// done
+
+    // on<AddProductEvent>((event,emit) async{
+    //   try{
+    //     emit(LoadingState());
+    //     final result = await addProductUseCase.call_add(event.product);
+
+    //          result.fold(
+    //           (error) => emit(ErrorState(message: error.toString())),             
+    //            (product) => emit(AddState())
+    //           );
+    //   }
+    //   catch(e){
+    //     emit(ErrorState(message: e.toString()));
+    //   }
+
+    // });//done
   }
 
 

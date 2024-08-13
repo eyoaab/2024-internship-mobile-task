@@ -1,8 +1,12 @@
+import 'package:equatable/equatable.dart';
+
 import '../../domain/entitiy/product_entities.dart';
 
-class ProductState {
-   final List<dynamic> data;
-  const ProductState([this.data = const <dynamic>[]]);
+abstract class ProductState extends Equatable{
+  const ProductState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class IntialState extends ProductState {}
@@ -10,18 +14,25 @@ class IntialState extends ProductState {}
 class LoadingState extends ProductState {}
 
 class LoadedAllProductState extends ProductState{
-   final List<ProductEnities> data;
-  const LoadedAllProductState({required this.data}) : super(data);
+  List<ProductEnities> data;
+   LoadedAllProductState({required this.data});
+
+  @override
+  List<Object> get props => [data];
 }
 
 class LoadedSingleProductState extends ProductState{
    final ProductEnities product;
    const LoadedSingleProductState({required this.product});
+   @override
+   List<Object> get props => [product];
 }
 
 class ErrorState extends ProductState{
     final String message;
-  ErrorState({required this.message}) : super([message]);
+  const ErrorState({required this.message});
+  @override
+  List<Object> get props => [message];
 }
 
 class UpdatedState extends ProductState{}
