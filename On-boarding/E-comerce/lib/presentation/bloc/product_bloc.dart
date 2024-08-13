@@ -27,7 +27,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                 }): super(IntialState()) {
       on<LoadAllProductEvent>((event,emit) async{
 
-              emit(LoadingState());
+              emit(LoadingState());;
               'waiting to get';
               final result = await getAllProductsUseCase.call_AllProducts();
               print(result);
