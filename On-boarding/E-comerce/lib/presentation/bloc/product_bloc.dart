@@ -82,7 +82,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
         final result = await addProductUseCase.call_add(event.product);
 
              result.fold(
-              (error) => emit(ErrorState(message: error.toString())),             
+              (error) => emit(ErrorState(message: error.toString())),  
+                         
                (product) => emit(AddState())
               );
       
