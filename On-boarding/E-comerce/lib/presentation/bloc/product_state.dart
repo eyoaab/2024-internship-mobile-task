@@ -1,3 +1,4 @@
+
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entitiy/product_entities.dart';
@@ -43,4 +44,5 @@ class DeletedState extends ProductState{
   List<Object> get props => [check];
 }
 class AddState extends ProductState{}
+
 
