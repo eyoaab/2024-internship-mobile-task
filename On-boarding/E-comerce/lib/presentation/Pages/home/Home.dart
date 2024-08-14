@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'profile.dart';
-import 'ShowProduct.dart';
+
 import '../../widgets/Widget_store.dart';
+import 'ShowProduct.dart';
+import 'profile.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -22,11 +23,8 @@ class Home extends StatelessWidget {
           ),
           
         ),
-        body: GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, '/detail');
-          },
-          child: Padding(
+        body: 
+          Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,6 +39,6 @@ class Home extends StatelessWidget {
               ],
             ),
           ),
-        ));
+        );
   }
 }

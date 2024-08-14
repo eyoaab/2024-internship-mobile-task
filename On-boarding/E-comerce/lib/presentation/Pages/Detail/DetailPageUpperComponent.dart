@@ -39,7 +39,7 @@ class Detailpageuppercomponent extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
+              child: Image.network(
                 path,
                 fit: BoxFit.cover,
               ),
@@ -69,7 +69,7 @@ class Detailpageuppercomponent extends StatelessWidget {
                 children: [
                   Text(
                     rating.toStringAsFixed(1),
-                    style: TextStyle(fontSize: 16, color: Colors.amber),
+                    style: const TextStyle(fontSize: 16, color: Colors.amber),
                   ),
                  space(4),
                   const Icon(

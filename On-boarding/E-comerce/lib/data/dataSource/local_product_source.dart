@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:task_6/core/error/exception.dart';
+import '../../core/error/exception.dart';
 import '../model/product_model.dart';
 
 abstract class ProductLocalDataSource {
@@ -15,13 +15,11 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
 
   @override
   Future<bool> storeProduct(ProductsModel productToStore) async {
-    final List<String> jsonList = store.getStringList('savedProducts') ?? [];
-    
+    final List<String> jsonList = store.getStringList('savedProducts') ?? [];  
     final productJson = jsonEncode(productToStore.toJson());
     jsonList.add(productJson);
 
     final success = await store.setStringList('savedProducts', jsonList);
-      print(success);
 
     if (!success){
       return false;
@@ -39,8 +37,10 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
       return jsonList
           .map((jsonString) => ProductsModel.fromJson(jsonDecode(jsonString)))
           .toList();
+    }else{
+    throw CacheException();
+
     }
 
-    throw CacheException();
   }
 }

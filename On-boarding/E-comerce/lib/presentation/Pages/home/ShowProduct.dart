@@ -1,79 +1,68 @@
 import 'package:flutter/material.dart';
-import '../../widgets/ShopingCard.dart'; 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/product_bloc.dart';
+import '../../bloc/product_event.dart';
+import '../../bloc/product_state.dart';
+import '../../widgets/ShopingCard.dart';
+import '../Detail/Detail.dart';
 
 class ShowProduct extends StatelessWidget {
-  List<Map<String, dynamic>> products = [
-    {  
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Smartphone',
-      'description': 'A high-end smartphone with a great camera.',
-      'price': 699.99,
-      'rating': 4.5,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-
-      'name': 'Laptop',
-      'description': 'A powerful laptop for gaming and work.',
-      'price': 1299.99,
-      'rating': 4.7,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-      'name': 'Headphones',
-      'description': 'Noise-cancelling over-ear headphones.',
-      'price': 199.99,
-      'rating': 4,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-
-      'name': 'Smartwatch',
-      'description': 'A smartwatch with fitness tracking features.',
-      'price': 249.99,
-      'rating': 4.2,
-    },
-    {
-      'assetPath': 'assets/boots.jpg',
-
-      'name': 'Tablet',
-      'description': 'A lightweight tablet with a stunning display.',
-      'price': 399.99,
-      'rating': 4.4,
-    },
-  ];
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView(
-        children: [
-          ShoppingCard(
-            assetPath: 'assets/boots.jpg', 
-            name: 'Product Name',
-            price: 99.99,
-            rating: 5,
-            description: 'Great',
-          ),
-          ShoppingCard(
-            assetPath: 'assets/boots.jpg', 
-            name: 'Another Product',
-            price: 149.99,
-            rating: 4,
-            description: 'Excellent',
-          ),
-          ShoppingCard(
-            assetPath: 'assets/boots.jpg', 
-            name: 'Product Name',
-            price: 99.99,
-            rating: 5,
-            description: 'Great',
-          ),
-        ],
-      ),
+    context.read<ProductBloc>().add(const LoadAllProductEvent());
+        
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        if (state is LoadingState) {
+       
+
+          return const Center(child: CircularProgressIndicator());
+        } else if (state is LoadedAllProductState) {
+       
+
+          return Expanded(
+            child: ListView.builder(
+              itemCount: state.data.length,
+              itemBuilder: (context, index) {
+                final product = state.data[index];
+                return GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Detail(product: product),
+                    ),
+                      );
+                  },
+                
+                child :ShoppingCard(                 
+                  assetPath: product.imageUrl,
+                  name: product.name,
+                  price: product.price,
+                  rating: 4,
+                  description: product.description,
+                ));
+              },
+            ),
+          );
+        } else if (state is ErrorState) {
+      
+
+          return  Center(child: Text('Failed to load products: ${state.message}'));
+        } else if (state is DeletedState) {
+          if (state.check){
+            return  const Center(child: Text('Failed to delete product.'));
+          }
+          return  const Center(child: Text('Product deleted successfully.'));
+
+        }
+        else {
+       
+
+          return const Center(child: Text('No products available.'));
+        }
+      },
     );
   }
 }

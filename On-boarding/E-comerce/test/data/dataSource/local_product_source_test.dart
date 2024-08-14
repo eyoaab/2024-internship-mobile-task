@@ -23,7 +23,7 @@ void main() {
 
   group('storeProduct', () {
     const tProductModel = ProductsModel(
-      id: 1,
+      id: 'cd',
       name: 'Product 1',
       price: 9.99,
       description: 'efe',
@@ -65,7 +65,7 @@ void main() {
 
   group('getStoredProducts', () {
     const tProductModel = ProductsModel(
-      id: 1,
+      id: 'a',
       name: 'Product 1',
       price: 9.99,
       description: 'aa',
@@ -98,6 +98,7 @@ void main() {
 
       // Assert
       expect(() => call(), throwsA(isA<CacheException>()));
+      // verify(call);
     });
   });
 }

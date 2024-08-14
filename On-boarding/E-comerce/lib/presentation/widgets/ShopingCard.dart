@@ -16,6 +16,8 @@ class ShoppingCard extends StatelessWidget {
     required this.description,
   });
 
+
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -31,7 +33,7 @@ class ShoppingCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(15.0),
-              child: Image.asset(
+              child: Image.network(
                 assetPath,
                 height: 200,
                 width: double.infinity,
@@ -73,7 +75,7 @@ class ShoppingCard extends StatelessWidget {
             ),
             space(10),
             Text(
-              description,
+              name,
               style: const  TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
           ],

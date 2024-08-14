@@ -1,31 +1,53 @@
+
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entitiy/product_entities.dart';
 
-abstract class ProductEvents {}
+abstract class ProductEvent extends Equatable {
+  const ProductEvent();
 
-class LoadAllProductEvents extends ProductEvents {
-   LoadAllProductEvents();
+  @override
+  List<Object> get props => [];
 }
 
-class GetSingleProductEvents extends ProductEvents {
-  int productid;
-  GetSingleProductEvents(this.productid);
+
+class LoadAllProductEvent extends ProductEvent{
+  const LoadAllProductEvent();
+
+  @override
+  List<Object> get props => [];
+
 }
 
-class UpdateProductEvent extends ProductEvents {
-  int productid;
+class GetSingleProductEvent extends ProductEvent{
+  String Id;
+  GetSingleProductEvent(this.Id);
+
+  @override
+  List<Object> get props => [Id];
+}
+
+class UpdateProductEvent extends ProductEvent{
+ ProductEnities product;
+  UpdateProductEvent(this.product);
+
+  @override
+  List<Object> get props => [product];
+}
+
+class DeleteProductEvent extends ProductEvent{
+  String Id;
+  DeleteProductEvent(this.Id);
+
+  @override
+  List<Object> get props => [Id];
+}
+
+class AddProductEvent extends ProductEvent{
   ProductEnities product;
-  UpdateProductEvent(this.productid, this.product);
+  AddProductEvent(this.product);
+
+  @override
+  List<Object> get props => [product];
 }
 
-class DeleteProductEvent extends ProductEvents {
-  int productid;
-  DeleteProductEvent(this.productid);
-
-}
-
-class CreateProductEvent extends ProductEvents {
-  ProductEnities product;
-  CreateProductEvent(this.product);
-}

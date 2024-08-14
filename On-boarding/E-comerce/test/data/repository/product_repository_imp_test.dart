@@ -32,7 +32,7 @@ void main() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
       });
 
-      test("should be offline ", (){
+      test('should be offline ', (){
         expect(mockNetworkInfo.isConnected, false);
 
       });
@@ -45,7 +45,7 @@ void main() {
         when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
       });
 
-      test("should be online", () {
+      test('should be online', () {
       expect(mockNetworkInfo.isConnected,false);
 
       }
@@ -56,7 +56,7 @@ void main() {
 
   group('getProducts', () {
     const tProductModel = ProductsModel(
-      id: 1,
+      id: 's',
       name: 'Test Product',
       description: 'Test Description',
       imageUrl: 'https://example.com/image.jpg',
@@ -69,10 +69,10 @@ void main() {
         when(mockRemoteDataSource.getProductById(any))
             .thenAnswer((_) async => tProductModel);
         // act
-        final result = await repository.getProductById(1);
+        final result = await repository.getProductById('s');
         // assert
         verify(mockRemoteDataSource.getProductById(any));
-        expect(result, equals(Right(tProductModel)));
+        expect(result, equals(const Right(tProductModel)));
       });
 
       test('should cache the data locally when the call to remote data source is successful', () async {
@@ -109,7 +109,7 @@ void main() {
         // assert
         verifyZeroInteractions(mockRemoteDataSource);
         verify(mockLocalDataSource.getStoredProducts());
-        expect(result, equals(Right(tProductModel)));
+        expect(result, equals(const Right(tProductModel)));
       });
 
       test('should return CacheFailure when there is no cached data present', () async {

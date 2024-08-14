@@ -3,7 +3,7 @@ import 'package:task_6/domain/entitiy/product_entities.dart';
 
 void main() {
   const testEntity1 = ProductEnities(
-    id: 1,
+    id: 's',
     name: 'Product 1',
     description: 'Description of Product 1',
     imageUrl: 'https://example.com/product1.jpg',
@@ -11,7 +11,7 @@ void main() {
   );
 
   const testEntity2 = ProductEnities(
-    id: 1,
+    id: 's',
     name: 'Product 1',
     description: 'Description of Product 1',
     imageUrl: 'https://example.com/product1.jpg',
