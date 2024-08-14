@@ -8,7 +8,7 @@ class DeleteProductbyidUsecase extends Equatable {
 
   DeleteProductbyidUsecase(this.productRepository);
 
-  Future<Either<Failure, bool>> call_delete(int productId) {
+  Future<Either<Failure, bool>> call_delete(String productId) {
     return productRepository.ProductDelete(productId);
   }
 

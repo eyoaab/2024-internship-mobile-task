@@ -19,7 +19,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final AddProductUsecase addProductUseCase;
 
 
-  ProductBloc({ required this.getAllProductsUseCase,
+  ProductBloc( { required this.getAllProductsUseCase,
                  required this.getProductByIdUseCase,
                  required this.updateProductUseCase,
                  required this.deleteProductUseCase,
@@ -27,10 +27,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                 }): super(IntialState()) {
       on<LoadAllProductEvent>((event,emit) async{
 
-              emit(LoadingState());;
+              emit(LoadingState());
               'waiting to get';
               final result = await getAllProductsUseCase.call_AllProducts();
-              print(result);
               result.fold(
               (error) => emit(ErrorState(message: error.toString())),             
                (products) => emit(LoadedAllProductState(data: products)),
@@ -48,7 +47,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
                (product) => emit(LoadedSingleProductState(product: product)),
               );
         
-    });// done
+    });
 
 
 
@@ -65,7 +64,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       
       
        
-    });// done
+    });
 
     on<DeleteProductEvent>((event,emit)async{
         emit(LoadingState());
@@ -73,7 +72,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
              result.fold(
               (error) => emit(ErrorState(message: error.toString())),             
-               (product) => emit(DeletedState())
+               (product) => emit(DeletedState(check: product))
               );
      });
 
@@ -88,6 +87,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
               );
       
 
-    });//done
+    });
   }
 }

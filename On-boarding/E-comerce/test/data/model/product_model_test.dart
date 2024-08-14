@@ -3,7 +3,7 @@ import 'package:task_6/data/model/product_model.dart';
 
 void main() {
   const testModel = ProductsModel(
-    id: 1,
+    id: 'a',
     name: 'Product 1',
     description: 'Description of Product 1',
     imageUrl: 'https://example.com/product1.jpg',

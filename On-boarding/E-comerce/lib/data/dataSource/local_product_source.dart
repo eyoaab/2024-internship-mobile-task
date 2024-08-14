@@ -20,7 +20,6 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
     jsonList.add(productJson);
 
     final success = await store.setStringList('savedProducts', jsonList);
-      print(success);
 
     if (!success){
       return false;

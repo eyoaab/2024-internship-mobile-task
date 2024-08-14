@@ -7,7 +7,6 @@ import 'package:task_6/domain/repository/product_repository.dart';
 class AddProductUsecase extends Equatable {
   final ProductRepository productRepository;
 
-  // Constructor only takes ProductRepository
   AddProductUsecase(this.productRepository);
 
   Future<Either<Failure, bool>> call_add(ProductEnities product) async {

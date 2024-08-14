@@ -19,16 +19,12 @@ final locator = GetIt.instance;
 
 Future<void> setUp() async {
   //! External Instances
-  print('external Instances are available');
   locator.registerLazySingleton(() => http.Client());
 
-  print('shared Instances are available');
 
   final sharedPreferences = await SharedPreferences.getInstance();
   locator.registerSingleton<SharedPreferences>(sharedPreferences);
-
   //! Core instances
-  print('network instances are available');
 
   locator.registerLazySingleton(() => Connectivity());
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
@@ -42,7 +38,6 @@ Future<void> setUp() async {
       () => ProductLocalDataSourceImpl(store: locator()));
 
   //! Repositories
-  print('repositories is available');
   locator.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
       remoteDataSource: locator(),
@@ -51,7 +46,6 @@ Future<void> setUp() async {
     ),
   );
 
-    print('usecases are available');
   //! Use Cases
   locator.registerLazySingleton(() => AllProductUsecase(locator()));
   locator.registerLazySingleton(() => ShowProductById(locator(),));
@@ -60,7 +54,6 @@ Future<void> setUp() async {
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
 
   //! BLoC
-  print('bloc is available ');
   locator.registerFactory(() => ProductBloc(
     getAllProductsUseCase: locator(),
     deleteProductUseCase: locator(),

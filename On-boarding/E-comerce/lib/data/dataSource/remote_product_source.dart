@@ -11,10 +11,10 @@ import '../model/product_model.dart';
 
 
 abstract class ProductRemoteDataSource {
-  Future<ProductsModel> getProductById(int id);
+  Future<ProductsModel> getProductById(String id);
   Future<Either<Failure, bool>> ProductAdd(ProductEnities product);
-  Future<Either<Failure, bool>> ProductDelete(int productId);
-  Future<Either<Failure, bool>> ProductUpdate(int productId, ProductEnities product);
+  Future<Either<Failure, bool>> ProductDelete(String productId);
+  Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product);
   Future<Either<Failure, List<ProductsModel>>> getAllProduct() ;
 }
 
@@ -23,7 +23,7 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   ProductRemoteDataSourceImpl( this.client);
 
   @override
-  Future<ProductsModel> getProductById(int id) async {
+  Future<ProductsModel> getProductById(String id) async {
     final response = await client.get(Uri.parse(Urls.getByUrl(id)));
 
     if (response.statusCode == 200) {
@@ -34,24 +34,37 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
 
-  // to get all products from the store
 
   @override
-    Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
-    final response = await client.get(Uri.parse(Urls.getAll()));
+Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
+  try {
+
+    
+    final response = await client.get(
+  Uri.parse(Urls.getAll())
+);
+
+    
     if (response.statusCode == 200) {
-      // print("/////");
-      print(json.decode(response.body));
       
-      return Right(json.decode(response.body));
+      List<ProductsModel> modelList = parseProductList(response.body);
+
+      
+
+      return Right(modelList);
     } else {
+     
       throw ServerException();
     }
-  }
+  } catch (e, stackTrace) {
     
-    // to update a product
+
+    return Left(ServerFailure(e.toString()));
+  }
+}
+
     @override
-  Future<Either<Failure, bool>> ProductUpdate(int productId, ProductEnities product) async {
+  Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product) async {
     final Map<String, String> data = {
       'id':product.id.toString(),
       'image': product.imageUrl,
@@ -74,17 +87,15 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
         
   }
 
-  // to delete a product
 
      @override
-  Future<Either<Failure, bool>> ProductDelete(int productId,) async {
+  Future<Either<Failure, bool>> ProductDelete(String productId,) async {
     final response = await client.put(
       Uri.parse(Urls.deleteProduct(productId)),
       body:productId.toString(),
       headers: {'Content-Type': 'application/json'},
     );    
     if (response.statusCode == 200) {
-      // return ProductsModel.fromJson(json.decode(response.body));
       
       return const Right(true); 
     } else {
@@ -120,3 +131,18 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 }
 
 
+
+
+
+
+
+List<ProductsModel> parseProductList(String jsonString) {
+  final Map<String, dynamic> jsonResponse = json.decode(jsonString);
+
+  if (jsonResponse['statusCode'] == 200 && jsonResponse['data'] != null) {
+    final List<dynamic> data = jsonResponse['data'];
+    return data.map((item) => ProductsModel.fromJson(item)).toList();
+  } else {
+    return [];
+  }
+}

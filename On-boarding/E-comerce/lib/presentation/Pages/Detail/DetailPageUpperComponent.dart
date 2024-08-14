@@ -39,7 +39,7 @@ class Detailpageuppercomponent extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
+              child: Image.network(
                 path,
                 fit: BoxFit.cover,
               ),

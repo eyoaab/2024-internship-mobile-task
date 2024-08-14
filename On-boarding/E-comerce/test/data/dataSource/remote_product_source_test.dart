@@ -19,7 +19,7 @@ void main() {
 
   setUp(() {
     mockHttpClient = MockClient();
-    dataSource = ProductRemoteDataSourceImpl(client: mockHttpClient);
+    dataSource = ProductRemoteDataSourceImpl(client);
   });
 
   group('getProductById', () {

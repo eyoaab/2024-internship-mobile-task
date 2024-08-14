@@ -7,10 +7,9 @@ import 'package:task_6/domain/repository/product_repository.dart';
 class UpdateProductUsecase extends Equatable {
   final ProductRepository productRepository;
 
-  // Constructor only takes ProductRepository
   UpdateProductUsecase(this.productRepository);
 
-  Future<Either<Failure, bool>> call_update(int productId, ProductEnities product) async {
+  Future<Either<Failure, bool>> call_update(String productId, ProductEnities product) async {
     return productRepository.ProductUpdate(productId, product);
   }
 

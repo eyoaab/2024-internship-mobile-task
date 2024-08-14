@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'injection_container.dart';
 import 'presentation/Pages/AddProduct/AddProduct.dart';
-import 'presentation/Pages/Detail/Detail.dart';
 import 'presentation/Pages/Search/SearchProduct.dart';
 import 'presentation/Pages/home/Home.dart';
 import 'presentation/bloc/product_bloc.dart';
 
+
+
+
 void main() {
+ 
   setUp(); 
   runApp(MyApp());
 }
@@ -30,9 +34,7 @@ class MyApp extends StatelessWidget {
             case '/':
               builder = (BuildContext context) => Home();
               break;
-            case '/detail':
-              builder = (BuildContext context) => Detail();
-              break;
+            
             case '/add':
               builder = (BuildContext context) => AddProduct();
               break;

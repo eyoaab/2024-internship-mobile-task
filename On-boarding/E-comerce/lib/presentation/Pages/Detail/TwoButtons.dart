@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/entitiy/product_entities.dart';
+import '../../bloc/product_bloc.dart';
+import '../../bloc/product_event.dart';
 import '../../widgets/Widget_store.dart';
 
 class Twobuttons extends StatelessWidget {
+ final ProductEnities product;
+
+  const Twobuttons({Key? key, required this.product}) : super(key: key);
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -11,7 +22,10 @@ class Twobuttons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
+              onPressed: () { 
+                // change state on bloc
+               
+                context.read<ProductBloc>().add(DeleteProductEvent(product.id));
                 Navigator.pushNamed(context, '/');
               },
               style: ElevatedButton.styleFrom(),
@@ -20,6 +34,8 @@ class Twobuttons extends StatelessWidget {
             space(16),
             OutlinedButton(
               onPressed: () {
+                 context.read<ProductBloc>().add(UpdateProductEvent(product));
+               
                 Navigator.pushNamed(context, '/');
 
               },

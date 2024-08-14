@@ -31,7 +31,7 @@ void main() {
   });
 
   const tempId = 1;
-  const tempProduct = ProductEnities(id: 1, name: 's', description: 's', imageUrl: 's', price: 1);
+  const tempProduct = ProductEnities(id: 'hjjk', name: 's', description: 's', imageUrl: 's', price: 1);
   const tempProduct1 = ProductEnities(id: 1, name: 's', description: 's', imageUrl: 's', price: 1);
   final List<ProductEnities> tempData = [tempProduct, tempProduct1]; 
 

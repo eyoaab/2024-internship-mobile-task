@@ -20,7 +20,7 @@ import 'package:task_6/domain/usecase/update_product_usecase.dart';
   ShowProductById,
   UpdateProductUsecase,
   DeleteProductbyidUsecase,
-  AddProducctUsecase
+AddProductUsecase
   
 ])
 void main() {}

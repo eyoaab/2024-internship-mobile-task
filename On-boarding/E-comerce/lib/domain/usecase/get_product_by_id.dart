@@ -7,10 +7,9 @@ import '../repository/product_repository.dart';
 class ShowProductById extends Equatable {
   final ProductRepository productRepository;
 
-  // Constructor only takes ProductRepository
   ShowProductById(this.productRepository);
 
-  Future<Either<Failure, ProductEnities>> call_show(int productId) async {
+  Future<Either<Failure, ProductEnities>> call_show(String productId) async {
     return productRepository.getProductById(productId);
   }
 
