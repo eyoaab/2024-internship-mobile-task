@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_6/core/error/exception.dart';
 import 'package:task_6/data/dataSource/local_product_source.dart';
@@ -10,7 +10,7 @@ import 'package:task_6/data/model/product_model.dart';
 
 import '../../helper/helper.mocks.dart';
 
-// Generate mock class
+
 @GenerateNiceMocks([MockSpec<SharedPreferences>()])
 void main() {
   late ProductLocalDataSourceImpl dataSource;
@@ -79,7 +79,6 @@ void main() {
       // Arrange
       when(mockSharedPreferences.getStringList(any))
           .thenReturn(tJsonList);
-      // when(mockSharedPreferences.getStringList(any)).thenThrow(CacheException);
 
       // Act
       final result = await dataSource.getStoredProducts();
@@ -93,12 +92,10 @@ void main() {
       when(mockSharedPreferences.getStringList(any))
           .thenReturn(null);
 
-      // Act
-      final call = dataSource.getStoredProducts;
-
-      // Assert
+    
+      final call = dataSource.getStoredProducts;    
       expect(() => call(), throwsA(isA<CacheException>()));
-      // verify(call);
+     
     });
   });
 }

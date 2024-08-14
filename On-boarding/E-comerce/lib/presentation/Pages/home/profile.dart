@@ -13,8 +13,8 @@ class Profile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(25.0),
               child: Image.asset(
-                // 'assets/eyob.png',
-                'assets/boots.jpg',
+                'assets/eyob.png',
+                // 'assets/boots.jpg',
 //
                 height: 80,
                 width: 80,

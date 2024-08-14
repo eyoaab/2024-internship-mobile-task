@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../home/ShowProduct.dart';
 import 'searchComponent.dart';
 import 'Catagory.dart';
@@ -15,8 +14,6 @@ class Searchproduct extends StatelessWidget {
                 Navigator.pushNamed(context, '/');
               },
             ),
-
-            //  Icon(Icons.arrow_back),
             title: const Text('Search Product')),
         body: Column(
           children: [SearchComponent(), ShowProduct(), Catagory()],

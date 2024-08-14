@@ -1,9 +1,9 @@
-import 'dart:ffi';
 
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:task_6/core/error/faliure.dart';
 import 'package:task_6/domain/entitiy/product_entities.dart';
 import 'package:task_6/presentation/bloc/product_bloc.dart';
 import 'package:task_6/presentation/bloc/product_event.dart';
@@ -12,106 +12,119 @@ import 'package:task_6/presentation/bloc/product_state.dart';
 import '../../helper/helper.mocks.dart';
 
 void main() {
-
+  late  MockShowProductById mockShowProductById;
   late MockAllProductUsecase mockAllProductUsecase;
-  late MockShowProductById mockShowProductById;
-  late MockUpdateProductUsecase mockUpdateProductUsecase;
   late MockDeleteProductbyidUsecase mockDeleteProductbyidUsecase;
-  late MockAddProducctUsecase mockAddProducctUsecase;
+  late MockUpdateProductUsecase updateProductUseCase;
+  late MockAddProductUsecase mockAddProductUsecase;
   late ProductBloc productBloc;
 
-
   setUp(() {
-    mockAllProductUsecase = MockAllProductUsecase();
     mockShowProductById = MockShowProductById();
-    mockUpdateProductUsecase = MockUpdateProductUsecase();
+    mockAllProductUsecase = MockAllProductUsecase();
     mockDeleteProductbyidUsecase = MockDeleteProductbyidUsecase();
-    mockAddProducctUsecase = MockAddProducctUsecase();
-    productBloc = ProductBloc(mockAllProductUsecase,mockShowProductById,mockUpdateProductUsecase,mockDeleteProductbyidUsecase,mockAddProducctUsecase);
+    updateProductUseCase = MockUpdateProductUsecase();
+    mockAddProductUsecase = MockAddProductUsecase();
+
+
+    productBloc = 
+    ProductBloc(getAllProductsUseCase: mockAllProductUsecase, 
+    getProductByIdUseCase: mockShowProductById
+    ,updateProductUseCase: updateProductUseCase, 
+    deleteProductUseCase: mockDeleteProductbyidUsecase, 
+    addProductUseCase: mockAddProductUsecase);
+
+     
   });
 
-  const tempId = 1;
-  const tempProduct = ProductEnities(id: 'hjjk', name: 's', description: 's', imageUrl: 's', price: 1);
-  const tempProduct1 = ProductEnities(id: 1, name: 's', description: 's', imageUrl: 's', price: 1);
-  final List<ProductEnities> tempData = [tempProduct, tempProduct1]; 
+  const testProsuct = ProductEnities(
+      id: '6672752cbd218790438efdb0',
+      name: 'Anime website',
+      description: 'Explore anime characters.',
+      price: 123,
+      imageUrl:'https://res.cloudinary.com/g5-mobile-track/image/upload/v1718777132/images/zxjhzrflkvsjutgbmr0f.jpg');
 
-  test('the initial state should be empty', () {
+  const testId = '6672752cbd218790438efdb0';
+
+  test('initial state should be empty', () {
     expect(productBloc.state, IntialState());
   });
-// to test show all product bloc
 
   blocTest<ProductBloc, ProductState>(
-    'should emit [LoadingState] and LoadedAllProductState]',
-    build: () {
-      when(mockAllProductUsecase.call_AllProducts()).thenAnswer((_) async => Right(tempData));
-      return productBloc;
-    },
-    act: (bloc) => bloc.add(const LoadAllProductEvent()),
-    expect: () => [
-      LoadingState(),
-       LoadedAllProductState(data: tempData),
-    ],
-  );
-
-  
-
- /// test for get product by id 
- 
-
- blocTest('should return [loading] and [product] states',
-  build: (){
-    when(mockShowProductById.call_show(tempId)).thenAnswer((_) async => const Right(tempProduct));
-    return productBloc;
-  },
-  act: (bloc) => bloc.add(GetSingleProductEvent(tempId)),
-  expect: () => [
-    LoadingState(),
-   const LoadedSingleProductState(product: tempProduct1),
-  ],
-  
-  );
-  
-
-// test for updating the products
+      'should emit [ProductLoading, GetProducts] when data is gotten successfully',
+      build: () {
+        when(mockShowProductById.call_show(testId))
+            .thenAnswer((_) async => const Right(testProsuct));
+        return productBloc;
+      },
+      act: (bloc) => bloc.add(GetSingleProductEvent(testId)),
+      expect: () =>
+          [LoadingState(),  const LoadedSingleProductState(product: testProsuct)]);
 
 
-blocTest('[loading state] -> [updated state]', build: (){
-  when(mockUpdateProductUsecase.call_update(tempProduct.id,tempProduct)).thenAnswer((_) async => const Right(true));
-  return productBloc;
+  blocTest<ProductBloc, ProductState>(
+      'should emit [ProductLoading, GetAllProducts] when data is gotten successfully',
+      build: () {
+        when(mockAllProductUsecase.call_AllProducts())
+            .thenAnswer((_) async => const Right([]));
+        return productBloc;
+      },
+      act: (bloc) => bloc.add(const LoadAllProductEvent()),
+      expect: () =>
+          [LoadingState(),  LoadedAllProductState(data:const [])]);
 
-},
-  act: (bloc) => bloc.add(UpdateProductEvent(tempProduct)),
-  expect: () => [
-    LoadingState(),
-    UpdatedState(),
-  ],
-);
+  blocTest<ProductBloc, ProductState>(
+      'should emit [ProductLoading, GetAllProducts] when data is gotten successfully',
+      build: () {
+        when(mockAllProductUsecase.call_AllProducts())
+            .thenAnswer((_) async => const Right([]));
+        return productBloc;
+      },
+      act: (bloc) => bloc.add(const LoadAllProductEvent()),
+      expect: () =>
+          [LoadingState(),  LoadedAllProductState(data: [])]);
 
-// test for deleting a product
+  blocTest<ProductBloc, ProductState>(
+      'should emit [ProductLoading] when Delete successful',
+      build: () {
+        when(mockDeleteProductbyidUsecase.call_delete(testId))
+            .thenAnswer((_) async => const Right(true));
+        return productBloc;
+      },
+      act: (bloc) => bloc.add(DeleteProductEvent(testId)),
+      expect: () => [LoadingState(),const DeletedState(check: true)]);
 
+  blocTest<ProductBloc, ProductState>(
+      'should emit [ProductLoading] when Update successful',
+      build: () {
+        when(updateProductUseCase.call_update(testId, testProsuct))
+            .thenAnswer((_) async => const Right(true));
+        return productBloc;
+      },
+      act: (bloc) =>
+          bloc.add(UpdateProductEvent(testProsuct)),
+      expect: () => [LoadingState(),UpdatedState()]);
 
-blocTest('[loading state] -> [deleted state]', build: (){
-  when(mockDeleteProductbyidUsecase.call_delete(tempId)).thenAnswer((_) async => const Right(true));
-  return productBloc;
+  blocTest<ProductBloc, ProductState>(
+      'should emit [ProductLoading] when insert successful',
+      build: () {
+        when(mockAddProductUsecase.call_add(testProsuct))
+            .thenAnswer((_) async => const Right(true));
+        return productBloc;
+      },
+      act: (bloc) => bloc.add(AddProductEvent(testProsuct)),
+      expect: () => [LoadingState(),AddState()]);
 
-},
-  act: (bloc) => bloc.add(DeleteProductEvent(tempId)),
-  expect: () => [
-    LoadingState(),
-    DeletedState(),
-  ],
-);
-
-
-// test for adding a pproduct
-blocTest('[loading state],- > [added state]', build: (){
-  when(mockAddProducctUsecase.call_add(tempProduct1)).thenAnswer((_) async => const Right(true));
-  return productBloc;
-},
-    act: (bloc) => bloc.add(AddProductEvent(tempProduct1)),
-    expect: () => [
-    LoadingState(),
-    AddState(),
-  ],
-);
+  blocTest<ProductBloc, ProductState>(
+      'should emit [ProductLoading, ProductLoadFailure] when get data is unsuccessful',
+      build: () {
+        when(mockShowProductById.call_show(testId)).thenAnswer(
+            (_) async => const Left(ServerFailure('Server failure')));
+        return productBloc;
+      },
+      act: (bloc) => bloc.add(GetSingleProductEvent(testId)),
+      expect: () => [
+            LoadingState(),
+            const ErrorState(message: 'Failure: Server failure'),
+          ]);
 }

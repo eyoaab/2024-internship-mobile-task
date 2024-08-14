@@ -9,6 +9,7 @@ import 'package:task_6/domain/usecase/delete_product_usecase.dart';
 import 'package:task_6/domain/usecase/get_all_products.dart';
 import 'package:task_6/domain/usecase/get_product_by_id.dart';
 import 'package:task_6/domain/usecase/update_product_usecase.dart';
+import 'package:task_6/presentation/bloc/product_bloc.dart';
 
 @GenerateMocks([
   http.Client,
@@ -20,7 +21,9 @@ import 'package:task_6/domain/usecase/update_product_usecase.dart';
   ShowProductById,
   UpdateProductUsecase,
   DeleteProductbyidUsecase,
-AddProductUsecase
+  AddProductUsecase,
+  ProductBloc ,
+
   
 ])
 void main() {}

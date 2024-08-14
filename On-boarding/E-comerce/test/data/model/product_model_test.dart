@@ -11,7 +11,7 @@ void main() {
   );
 
   const testJson = {
-    'id': 1,
+    'id': 'a',
     'name': 'Product 1',
     'description': 'Description of Product 1',
     'imageUrl': 'https://example.com/product1.jpg',
@@ -20,7 +20,7 @@ void main() {
 
   group('ProductsModel test', () {
     test('should assign the values properly', () {
-      expect(testModel.id, 1);
+      expect(testModel.id, 'a');
       expect(testModel.name, 'Product 1');
       expect(testModel.description, 'Description of Product 1');
       expect(testModel.imageUrl, 'https://example.com/product1.jpg');

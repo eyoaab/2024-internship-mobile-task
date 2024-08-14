@@ -19,11 +19,11 @@ void main() {
 
   setUp(() {
     mockHttpClient = MockClient();
-    dataSource = ProductRemoteDataSourceImpl(client);
+    dataSource = ProductRemoteDataSourceImpl(mockHttpClient);
   });
 
   group('getProductById', () {
-    const tId = 1;
+    const tId = '1';
     const  tProductModel = ProductsModel(
       id: tId,
       name: 'Test Product',
@@ -56,26 +56,13 @@ void main() {
     });
 
     test('should throw a ServerException when the response code is not 200', () async {
-   
-      // when(mockHttpClient.get(any))
-          // .thenAnswer((_) async => http.Response('Something went wrong', 404));
+       
       when(mockHttpClient.get(any)).thenAnswer((_)async => http.Response('try this',404));     // act
       final result = dataSource.getProductById(tId);
 
       // assert
       expect(result, throwsA(isA<ServerException>()));
     });
-    
-
-    test('should return the right data', () async {
-   
-      // when(mockHttpClient.get(any))
-          // .thenAnswer((_) async => http.Response('Something went wrong', 404));
-      // when(mockHttpClient.get(any)).thenAnswer((_)async => http.Response('try this',404));     // act
-      final result = dataSource.getAllProduct();
-
-      // assert
-      expect(result, 1);
-    });
+  
   });
 }
