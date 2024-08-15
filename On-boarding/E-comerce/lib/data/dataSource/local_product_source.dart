@@ -5,7 +5,7 @@ import '../model/product_model.dart';
 
 abstract class ProductLocalDataSource {
   Future<List<ProductsModel>> getStoredProducts();
-  Future<bool> storeProduct(ProductsModel productToStore);
+  Future<bool> storeProduct(List<ProductsModel> productToStore);
 }
 
 class ProductLocalDataSourceImpl extends ProductLocalDataSource {
@@ -14,33 +14,34 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
   ProductLocalDataSourceImpl({required this.store});
 
   @override
-  Future<bool> storeProduct(ProductsModel productToStore) async {
-    final List<String> jsonList = store.getStringList('savedProducts') ?? [];  
-    final productJson = jsonEncode(productToStore.toJson());
-    jsonList.add(productJson);
-
+  Future<bool> storeProduct(List<ProductsModel> productsToStore) async {
+    final List<String> jsonList = productsToStore.map((product) => jsonEncode(product.toJson())).toList();
+    
     final success = await store.setStringList('savedProducts', jsonList);
-
-    if (!success){
-      return false;
-    }
-    return true;
+    print('in local');
+    print(success);
+  
+    return success;
   }
+
 
  
 
   @override
   Future<List<ProductsModel>> getStoredProducts() async {
-    final jsonList = store.getStringList('savedProducts');
+    // Get the JSON list from shared preferences
+    final List<String>? jsonList = store.getStringList('savedProducts');
+     
 
-    if (jsonList != null) {
-      return jsonList
-          .map((jsonString) => ProductsModel.fromJson(jsonDecode(jsonString)))
-          .toList();
-    }else{
-    throw CacheException();
 
+    if (jsonList == null) {
+      return [];
     }
 
+    // Convert the JSON strings back to ProductsModel objects
+    final List<ProductsModel> products = jsonList.map((json) => ProductsModel.fromJson(jsonDecode(json))).toList();
+
+    return products;
   }
 }
+

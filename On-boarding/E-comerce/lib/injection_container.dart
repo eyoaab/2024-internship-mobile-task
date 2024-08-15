@@ -30,7 +30,6 @@ Future<void> setUp() async {
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   //! Data Sources
-  print('remote data source');
 
   locator.registerLazySingleton<ProductRemoteDataSource>(
       () => ProductRemoteDataSourceImpl(locator()));

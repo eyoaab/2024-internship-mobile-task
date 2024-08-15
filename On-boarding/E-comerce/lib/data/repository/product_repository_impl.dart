@@ -9,6 +9,8 @@ import '../../domain/repository/product_repository.dart';
 import '../dataSource/local_product_source.dart';
 import '../dataSource/remote_product_source.dart';
 import '../model/product_model.dart';
+// import 'package:connectivity_plus/connectivity_plus.dart';
+
 
 class ProductRepositoryImpl implements ProductRepository {
   final ProductRemoteDataSource remoteDataSource;
@@ -23,16 +25,35 @@ class ProductRepositoryImpl implements ProductRepository {
 
   @override
   Future<Either<Failure, List<ProductsModel>>> getAllProducts() async {
-    if (await networkInfo.isConnected) {
+      bool isConnected = await networkInfo.isConnected;
+    if ( isConnected) {
       try {
+        List<ProductsModel> result = await localDataSource.getStoredProducts();
+        if (result.isNotEmpty){
+          print('data from the repo locaal');
+         
+          return Right(result);
+        }
+        print('no data is not from local');
         final remoteProducts = await remoteDataSource.getAllProduct();
+        remoteProducts.fold((left){}, 
+        (rightProduct){
+           Future<bool> x =  localDataSource.storeProduct(rightProduct);
+           
+        });
+       
+       
+        
+        
         return remoteProducts ;
       } on ServerException {
         return const Left(ServerFailure('Failed to fetch data from server.'));
       }
     } else {
+      print('there is no internet');
       try {
         final localProducts = await localDataSource.getStoredProducts();
+        print(localProducts);
         return Right(localProducts);
       } on CacheException {
         return const Left(CacheFailure('No stored data available.'));

@@ -26,7 +26,11 @@ class Twobuttons extends StatelessWidget {
                 // change state on bloc
                
                 context.read<ProductBloc>().add(DeleteProductEvent(product.id));
+                // showResponse(context, const Icon(Icons.info),'product deleted succesfully');
+
                 Navigator.pushNamed(context, '/');
+                showResponse(context, const Icon(Icons.info, size: 50,),'product deleted succesfully');
+
               },
               style: ElevatedButton.styleFrom(),
               child: const Text('DELETE'),
@@ -35,8 +39,10 @@ class Twobuttons extends StatelessWidget {
             OutlinedButton(
               onPressed: () {
                  context.read<ProductBloc>().add(UpdateProductEvent(product));
-               
+
                 Navigator.pushNamed(context, '/');
+
+               
 
               },
               style: OutlinedButton.styleFrom(
@@ -54,3 +60,22 @@ class Twobuttons extends StatelessWidget {
     );
   }
 }
+
+
+void showResponse(BuildContext context, Icon icin, String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          icon: icin,
+          content: Text(message,style: const TextStyle(fontSize: 21),),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }

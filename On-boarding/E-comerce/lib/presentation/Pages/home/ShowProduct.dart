@@ -11,9 +11,11 @@ class ShowProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ProductBloc>().add(const LoadAllProductEvent());
-        
-    return BlocBuilder<ProductBloc, ProductState>(
-      builder: (context, state) {
+
+
+       return BlocBuilder<ProductBloc,ProductState>(
+          builder:(context,state){
+
         if (state is LoadingState) {
        
 
