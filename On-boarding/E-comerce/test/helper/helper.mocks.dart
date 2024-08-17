@@ -7,8 +7,8 @@ import 'dart:async' as _i12;
 import 'dart:convert' as _i13;
 import 'dart:typed_data' as _i15;
 
+import 'package:bloc/bloc.dart' as _i24;
 import 'package:dartz/dartz.dart' as _i4;
-import 'package:flutter_bloc/flutter_bloc.dart' as _i24;
 import 'package:http/http.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i14;
@@ -522,11 +522,46 @@ class MockProductLocalDataSource extends _i1.Mock
       ) as _i12.Future<List<_i3.ProductsModel>>);
 
   @override
-  _i12.Future<bool> storeProduct(_i3.ProductsModel? productToStore) =>
+  _i12.Future<bool> storeProduct(List<_i3.ProductsModel>? productToStore) =>
       (super.noSuchMethod(
         Invocation.method(
           #storeProduct,
           [productToStore],
+        ),
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
+
+  @override
+  _i12.Future<bool> deleteProduct(String? Id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteProduct,
+          [Id],
+        ),
+        returnValue: _i12.Future<bool>.value(false),
+      ) as _i12.Future<bool>);
+
+  @override
+  _i12.Future<_i3.ProductsModel> getSingleProduct(String? Id) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSingleProduct,
+          [Id],
+        ),
+        returnValue: _i12.Future<_i3.ProductsModel>.value(_FakeProductsModel_2(
+          this,
+          Invocation.method(
+            #getSingleProduct,
+            [Id],
+          ),
+        )),
+      ) as _i12.Future<_i3.ProductsModel>);
+
+  @override
+  _i12.Future<bool> storeSingleProduct(_i3.ProductsModel? updatedProduct) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #storeSingleProduct,
+          [updatedProduct],
         ),
         returnValue: _i12.Future<bool>.value(false),
       ) as _i12.Future<bool>);

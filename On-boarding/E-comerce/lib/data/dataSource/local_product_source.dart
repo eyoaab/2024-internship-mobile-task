@@ -6,6 +6,10 @@ import '../model/product_model.dart';
 abstract class ProductLocalDataSource {
   Future<List<ProductsModel>> getStoredProducts();
   Future<bool> storeProduct(List<ProductsModel> productToStore);
+  Future<bool> deleteProduct(String Id);
+  Future<ProductsModel> getSingleProduct(String Id);
+  Future<bool> storeSingleProduct(ProductsModel updatedProduct);
+
 }
 
 class ProductLocalDataSourceImpl extends ProductLocalDataSource {
@@ -18,8 +22,7 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
     final List<String> jsonList = productsToStore.map((product) => jsonEncode(product.toJson())).toList();
     
     final success = await store.setStringList('savedProducts', jsonList);
-    print('in local');
-    print(success);
+
   
     return success;
   }
@@ -29,19 +32,42 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
 
   @override
   Future<List<ProductsModel>> getStoredProducts() async {
-    // Get the JSON list from shared preferences
+
     final List<String>? jsonList = store.getStringList('savedProducts');
-     
-
-
+    
     if (jsonList == null) {
       return [];
     }
-
-    // Convert the JSON strings back to ProductsModel objects
+  
     final List<ProductsModel> products = jsonList.map((json) => ProductsModel.fromJson(jsonDecode(json))).toList();
 
     return products;
   }
+
+
+
+  @override
+  Future<bool> deleteProduct(String productId) async {
+    final success = await store.setString(productId, '');
+    return success;
+  }
+
+  @override
+  Future<ProductsModel> getSingleProduct(String Id)async{
+    final product = await store.getString(Id);  
+    return ProductsModel.fromJson(jsonDecode(product.toString()));  
+    
+  }
+
+  Future<bool> storeSingleProduct(ProductsModel product)async{
+    final success = await store.setString(product.id, jsonEncode(product.toJson()));
+    return success;
+  
+  }
+
+
+ 
+
+
 }
 

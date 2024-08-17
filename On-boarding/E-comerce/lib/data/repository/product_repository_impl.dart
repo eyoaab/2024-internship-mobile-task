@@ -9,6 +9,7 @@ import '../../domain/repository/product_repository.dart';
 import '../dataSource/local_product_source.dart';
 import '../dataSource/remote_product_source.dart';
 import '../model/product_model.dart';
+import '../model/ptoduct_to_save.dart';
 // import 'package:connectivity_plus/connectivity_plus.dart';
 
 
@@ -28,22 +29,24 @@ class ProductRepositoryImpl implements ProductRepository {
       bool isConnected = await networkInfo.isConnected;
     if ( isConnected) {
       try {
-        List<ProductsModel> result = await localDataSource.getStoredProducts();
-        if (result.isNotEmpty){
-          print('data from the repo locaal');
+        // List<ProductsModel> result = await localDataSource.getStoredProducts();
+        // if (result.isNotEmpty){
+        //   print('data from the repo locaal');
          
-          return Right(result);
-        }
+        //   return Right(result);
+        // }
         print('no data is not from local');
         final remoteProducts = await remoteDataSource.getAllProduct();
-        remoteProducts.fold((left){}, 
+        remoteProducts.fold((left){print('error in repo');}, 
         (rightProduct){
            Future<bool> x =  localDataSource.storeProduct(rightProduct);
+           print('data saved fromm repo');
            
         });
        
        
-        
+        // print('data in remote repo t');
+        // print(remoteProducts);
         
         return remoteProducts ;
       } on ServerException {
@@ -119,7 +122,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure,bool>> ProductAdd(ProductEnities product )async{
+  Future<Either<Failure,bool>> ProductAdd(SendProduct product )async{
     if (await networkInfo.isConnected) {
       try {
         final result = await remoteDataSource.ProductAdd(product);

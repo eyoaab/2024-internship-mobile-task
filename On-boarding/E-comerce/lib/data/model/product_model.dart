@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import '../../domain/entitiy/product_entities.dart';
 
 class ProductsModel extends ProductEnities {
@@ -32,7 +34,7 @@ class ProductsModel extends ProductEnities {
       name: json['name'],
       description: json['description'],
       imageUrl: json['imageUrl'],
-      price: json['price'],
+      price: (json['price'] as num).toDouble(),
     );
   }
 

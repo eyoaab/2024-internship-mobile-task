@@ -10,9 +10,11 @@ import 'presentation/Pages/home/Home.dart';
 import 'presentation/bloc/product_bloc.dart';
 
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
  
-  setUp(); 
+ await setUp(); 
   runApp(MyApp());
 }
 

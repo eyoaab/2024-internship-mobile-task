@@ -32,7 +32,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
               final result = await getAllProductsUseCase.call_AllProducts();
               
               result.fold(
-              (error) => emit(ErrorState(message: error.toString())),             
+              (error) => emit(ErrorState(message: error.toString())),               
                (products) => emit(LoadedAllProductState(data: products)),
               ); 
               

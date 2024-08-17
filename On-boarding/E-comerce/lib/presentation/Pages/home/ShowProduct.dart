@@ -13,6 +13,8 @@ class ShowProduct extends StatelessWidget {
     context.read<ProductBloc>().add(const LoadAllProductEvent());
 
 
+
+
        return BlocBuilder<ProductBloc,ProductState>(
           builder:(context,state){
 
@@ -53,10 +55,11 @@ class ShowProduct extends StatelessWidget {
 
           return  Center(child: Text('Failed to load products: ${state.message}'));
         } else if (state is DeletedState) {
-          if (state.check){
-            return  const Center(child: Text('Failed to delete product.'));
-          }
-          return  const Center(child: Text('Product deleted successfully.'));
+              context.read<ProductBloc>().add(const LoadAllProductEvent());
+              
+              showResponse(context,const Icon(Icons.abc),'saved');
+              
+              return const Center(child: Text('Product deleted successfully.'));
 
         }
         else {
@@ -67,4 +70,32 @@ class ShowProduct extends StatelessWidget {
       },
     );
   }
+}
+
+
+
+void showResponse(BuildContext context, Icon icin, String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        icon: icin,
+        content: Text(
+          message,
+          style: const TextStyle(fontSize: 21),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () { 
+            context.read<ProductBloc>().add(const LoadAllProductEvent());
+
+
+              Navigator.of(context).pop();},
+
+          child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }

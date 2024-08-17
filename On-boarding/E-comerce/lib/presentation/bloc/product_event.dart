@@ -2,6 +2,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entitiy/product_entities.dart';
+import '../../data/model/ptoduct_to_save.dart';
 
 abstract class ProductEvent extends Equatable {
   const ProductEvent();
@@ -46,7 +47,7 @@ class DeleteProductEvent extends ProductEvent{
 }
 
 class AddProductEvent extends ProductEvent{
-  ProductEnities product;
+   SendProduct product;
   AddProductEvent(this.product);
 
   @override

@@ -44,7 +44,7 @@ class Profile extends StatelessWidget {
                 ),
               ],
             ),
-           const  SizedBox(width: 200),
+           const  SizedBox(width: 100),
             GestureDetector(
               onTap: () {
                 Navigator.pushNamed(context, '/search');

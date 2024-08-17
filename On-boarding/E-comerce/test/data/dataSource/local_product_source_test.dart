@@ -30,6 +30,7 @@ void main() {
       imageUrl: 'https://example.com/image.jpg',
 
     );
+    const List<ProductsModel> tmodel=[tProductModel];
 
     test('should store product in SharedPreferences', () async {
       // Arrange
@@ -39,7 +40,7 @@ void main() {
           .thenAnswer((_) async => true);
 
       // Act
-      final result = await dataSource.storeProduct(tProductModel);
+      final result = await dataSource.storeProduct(tmodel);
 
       // Assert
       final expectedJsonString = jsonEncode(tProductModel.toJson());
@@ -56,7 +57,7 @@ void main() {
           .thenAnswer((_) async => false);
 
       // Act
-      final result = await dataSource.storeProduct(tProductModel);
+      final result = await dataSource.storeProduct(tmodel);
 
       // Assert
       expect(result, false);
