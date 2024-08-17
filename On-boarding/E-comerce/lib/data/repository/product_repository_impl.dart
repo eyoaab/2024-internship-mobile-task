@@ -104,22 +104,27 @@ class ProductRepositoryImpl implements ProductRepository {
 
  @override
   Future<Either<Failure,bool>> ProductUpdate(String productId, ProductEnities product) async{
-      if (await networkInfo.isConnected) {
+    
+     if (await networkInfo.isConnected) {
       try {
         final result = await remoteDataSource.ProductUpdate(productId,product);
-        if (result == true){
-            return  const Right(true);
+        if(result == true) {
+          return  const Right(true);
         }
-        else{
+        else {
           return  const Right(false);
-        }
+        } 
+       
       } on ServerException {
-        return const Left(ServerFailure('Failed to fetch data from server.'));
+        return const Left(ServerFailure('Failed to delete product'));
       }
     } else {
-      return const Left(ConnectionFailure('connection error'));
-    }
+      return  const Left(ServerFailure('Failed to delete product'));
+
   }
+      
+    } 
+  
 
   @override
   Future<Either<Failure,bool>> ProductAdd(SendProduct product )async{

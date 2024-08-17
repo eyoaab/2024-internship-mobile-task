@@ -52,11 +52,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     on<UpdateProductEvent>((event,emit) async{
         emit(LoadingState());
+        print('update onrequest bloc');
         final result = await updateProductUseCase.call_update(event.product.id,event.product);
+        print('update response on bloc');
+
 
              result.fold(
               (error) => emit(ErrorState(message: error.toString())),             
-               (product) => emit(UpdatedState())
+               (product) => emit(UpdatedState(check: product))
               );   
     });
 

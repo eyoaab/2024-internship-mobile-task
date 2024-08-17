@@ -11,6 +11,8 @@ class UpdateProductUsecase extends Equatable {
   UpdateProductUsecase(this.productRepository);
 
   Future<Either<Failure, bool>> call_update(String productId, ProductEnities product) async {
+        print('update onrequest usecase');
+
     return productRepository.ProductUpdate(productId, product);
   }
 

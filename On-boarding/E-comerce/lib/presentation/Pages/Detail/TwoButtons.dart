@@ -5,6 +5,7 @@ import '../../bloc/product_bloc.dart';
 import '../../bloc/product_event.dart';
 import '../../bloc/product_state.dart';
 import '../../widgets/Widget_store.dart';
+import '../UpdateProfile/UpdateProfile.dart';
 
 class Twobuttons extends StatelessWidget {
   final ProductEnities product;
@@ -33,8 +34,8 @@ class Twobuttons extends StatelessWidget {
                         .read<ProductBloc>()
                         .add(const LoadAllProductEvent());
 
-                    // Navigator.pushNamed(context, '/');
-                    // showResponse(context, const Icon(Icons.info, size: 50,),'product deleted succesfully');
+                    Navigator.pushNamed(context, '/');
+                    showResponse(context, const Icon(Icons.info, size: 50,),'product deleted succesfully');
                   },
                   style: ElevatedButton.styleFrom(),
                   child: const Text('DELETE'),
@@ -44,7 +45,12 @@ class Twobuttons extends StatelessWidget {
                   onPressed: () {
                     //  context.read<ProductBloc>().add(UpdateProductEvent(product));
 
-                    Navigator.pushNamed(context, '/');
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpdateProfile(product: product),
+                    ),
+                      );
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.blue),

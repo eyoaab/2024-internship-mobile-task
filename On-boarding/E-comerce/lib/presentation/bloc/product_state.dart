@@ -36,7 +36,10 @@ class ErrorState extends ProductState{
   List<Object> get props => [message];
 }
 
-class UpdatedState extends ProductState{}
+class UpdatedState extends ProductState{
+  final check;
+  const UpdatedState({required this.check});
+}
 class DeletedState extends ProductState{
   final check;
   const DeletedState({required this.check});

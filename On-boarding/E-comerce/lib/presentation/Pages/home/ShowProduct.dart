@@ -11,10 +11,6 @@ class ShowProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<ProductBloc>().add(const LoadAllProductEvent());
-
-
-
-
        return BlocBuilder<ProductBloc,ProductState>(
           builder:(context,state){
 
@@ -52,14 +48,22 @@ class ShowProduct extends StatelessWidget {
           );
         } else if (state is ErrorState) {
       
-
           return  Center(child: Text('Failed to load products: ${state.message}'));
         } else if (state is DeletedState) {
               context.read<ProductBloc>().add(const LoadAllProductEvent());
               
               showResponse(context,const Icon(Icons.abc),'saved');
+
+              Navigator.pushNamed(context,'/');
+                            return const Center(child: Text('Product deleted successfully.'));
+
+        } else if (state is UpdatedState) {
+              context.read<ProductBloc>().add(const LoadAllProductEvent());
               
-              return const Center(child: Text('Product deleted successfully.'));
+              showResponse(context,const Icon(Icons.abc),'saved');
+
+              Navigator.pushNamed(context,'/');
+                            return const Center(child: Text('Product deleted successfully.'));
 
         }
         else {

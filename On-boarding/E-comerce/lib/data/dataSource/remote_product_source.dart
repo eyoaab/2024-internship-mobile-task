@@ -49,7 +49,7 @@ Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
 print(response.statusCode);
     if (response.statusCode == 200) {
 
-        print(response.body);
+        // print(response.body);
 
       
       List<ProductsModel> modelList = parseProductList(response.body);
@@ -70,23 +70,27 @@ print(response.statusCode);
     @override
   Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product) async {
     final Map<String, String> data = {
-      'id':product.id.toString(),
-      'image': product.imageUrl,
       'name': product.name,
       'description': product.description,
       'price': '${product.price}'
-    };
+    };  
+ 
 
     final response = await client.put(
       Uri.parse(Urls.updateProduct(productId)),
       body: json.encode(data),
       headers: {'Content-Type': 'application/json'},
-    );    
+    ); 
+  print('on product update on remote');
+    print(response.statusCode);   
     if (response.statusCode == 200) {
+      print('product updated successfully');
     
       return const Right(true); 
     } else {
-      throw ServerException();
+      print('product updated successfully');
+
+     return const Right(false);
     }
         
   }
