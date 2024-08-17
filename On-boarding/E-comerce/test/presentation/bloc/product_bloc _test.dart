@@ -118,7 +118,7 @@ blocTest<ProductBloc,ProductState>(
       },
       act: (bloc) =>
           bloc.add(UpdateProductEvent(testProduct)),
-      expect: () => [LoadingState(),UpdatedState()]);
+      expect: () => [LoadingState(),const UpdatedState(check: true)]);
 
   blocTest<ProductBloc, ProductState>(
       'should emit [ProductLoading] when insert successful',

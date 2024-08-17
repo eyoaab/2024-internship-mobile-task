@@ -54,3 +54,16 @@ class AddProductEvent extends ProductEvent{
   List<Object> get props => [product];
 }
 
+// for user
+class LogInStateEvent extends ProductEvent{
+  String userName;
+  String password;
+  LogInStateEvent({required this.userName,required this.password}
+);}
+
+
+class  SignInEvent extends ProductEvent{
+  String userName;
+  String password;
+  SignInEvent({required this.userName,required this.password});
+}

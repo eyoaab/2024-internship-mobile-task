@@ -48,4 +48,12 @@ class DeletedState extends ProductState{
 }
 class AddState extends ProductState{}
 
+// for user
+
+class LogedState extends ProductState{
+  String tokens;
+   LogedState({required this.tokens});
+}
+
+
 

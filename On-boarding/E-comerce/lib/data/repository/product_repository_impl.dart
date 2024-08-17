@@ -1,10 +1,13 @@
 
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:dartz/dartz.dart';
 
 import '../../core/Network/networl_info.dart';
 import '../../core/error/exception.dart';
 import '../../core/error/faliure.dart';
 import '../../domain/entitiy/product_entities.dart';
+import '../../domain/entitiy/user_entities.dart';
 import '../../domain/repository/product_repository.dart';
 import '../dataSource/local_product_source.dart';
 import '../dataSource/remote_product_source.dart';
@@ -141,13 +144,46 @@ class ProductRepositoryImpl implements ProductRepository {
         return const Left(ServerFailure('Failed to add product'));
       }
     } else {
-      return  const Left(ServerFailure('Failed to add product'));
+    return  const Left(ServerFailure('Failed to add product'));
 
   }
-
- 
-
-
   }
 
+ @override
+  Future<Either<Failure, bool>> UserLogIn(UserEnities user)async{
+    if (await networkInfo.isConnected) {
+      try {
+        // final result = await remoteDataSource.UserSignUp(user);
+     
+        if(1 == true) {
+          return  const Right(true);
+        }
+        else {
+          return  const Right(false);
+        } 
+      } on ServerException {
+        return const Left(ServerFailure('Failed to log in user'));
+      }
+    } else {
+      return  const Left(ServerFailure('Failed to log in user'));
+    }
+  }
+  @override
+  Future<Either<Failure, bool>> UserSignUp(UserEnities user)async{
+    if (await networkInfo.isConnected) {
+      try {
+        // final result = await remoteDataSource.UserSignUp(user);
+        if(1 == true) {
+          return  const Right(true);
+        }
+        else {
+          return  const Right(false);
+        } 
+      } on ServerException {
+        return const Left(ServerFailure('Failed to log in user'));
+      }
+    } else {
+      return  const Left(ServerFailure('Failed to log in user'));
+    }
+  }
 }

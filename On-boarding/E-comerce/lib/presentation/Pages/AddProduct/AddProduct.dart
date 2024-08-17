@@ -63,7 +63,7 @@ class _AddProductState extends State<AddProduct> {
           );
         } else if (state is AddState) {
           Navigator.pushNamed(context, '/');
-           context.read<ProductBloc>().add(const LoadAllProductEvent());
+          context.read<ProductBloc>().add(const LoadAllProductEvent());
 
           
           // showResponse(context, const Icon(Icons.check), 'Product added successfully');

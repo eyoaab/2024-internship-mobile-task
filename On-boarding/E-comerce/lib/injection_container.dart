@@ -14,6 +14,10 @@ import 'domain/usecase/get_all_products.dart';
 import 'domain/usecase/get_product_by_id.dart';
 import 'domain/usecase/update_product_usecase.dart';
 import 'presentation/bloc/product_bloc.dart';
+import './domain/entitiy/user_entities.dart';
+import './domain/usecase/signIn_usecase.dart';
+import './domain/usecase/login_usecase.dart';
+
 
 final locator = GetIt.instance;
 
@@ -61,6 +65,8 @@ Future<void> setUp() async {
   locator.registerLazySingleton(() => DeleteProductbyidUsecase(locator()));
   locator.registerLazySingleton(() => AddProductUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
+  locator.registerLazySingleton(() => SignUp(locator()));
+  locator.registerLazySingleton(() => LoginUsecase(locator()));
 
   //! BLoC
   print('product bloc');

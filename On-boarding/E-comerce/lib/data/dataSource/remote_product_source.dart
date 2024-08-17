@@ -8,6 +8,7 @@ import '../../core/constants/Url/url.dart';
 import '../../core/error/exception.dart';
 import '../../core/error/faliure.dart';
 import '../../domain/entitiy/product_entities.dart';
+import '../../domain/entitiy/user_entities.dart';
 import '../model/product_model.dart';
 import '../model/ptoduct_to_save.dart';
 
@@ -147,9 +148,10 @@ Future<Either<Failure, bool>> ProductAdd(SendProduct product) async {
 }
 
 
-}
+
 
 List<ProductsModel> parseProductList(String jsonString) {
+
   final Map<String, dynamic> jsonResponse = json.decode(jsonString);
 
   if (jsonResponse['statusCode'] == 200 && jsonResponse['data'] != null) {
@@ -158,4 +160,54 @@ List<ProductsModel> parseProductList(String jsonString) {
   } else {
     return [];
   }
+}
+Future<Either<Failure, bool>> UserSignUp(UserEnities user) async {
+final Map<String, String> data = {
+      'username': user.username,
+      'password': user.password
+    };  
+ 
+
+    final response = await client.put(
+      Uri.parse(Urls.updateProduct('examplw')),
+      body: json.encode(data),
+      headers: {'Content-Type': 'application/json'},
+    ); 
+    print(response.statusCode);   
+    if (response.statusCode == 200) {
+    
+      return const Right(true); 
+    } else {
+
+     return const Right(false);
+    }
+
+}
+Future<Either<Failure, bool>> UserLogIn(UserEnities user) async {
+final Map<String, String> data = {
+      'username': user.username,
+      'password': user.password
+    };  
+ 
+
+    final response = await client.put(
+      Uri.parse(Urls.updateProduct('examplw')),
+      body: json.encode(data),
+      headers: {'Content-Type': 'application/json'},
+    ); 
+    print(response.statusCode);   
+    if (response.statusCode == 200) {
+    
+      return const Right(true); 
+    } else {
+
+     return const Right(false);
+    }
+
+}
+
+// to user
+
+// create a function for a sign up page with
+
 }
