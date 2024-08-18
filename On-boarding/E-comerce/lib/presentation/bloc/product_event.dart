@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entitiy/product_entities.dart';
 import '../../data/model/ptoduct_to_save.dart';
+import '../../domain/entitiy/user_entities.dart';
 
 abstract class ProductEvent extends Equatable {
   const ProductEvent();
@@ -56,14 +57,17 @@ class AddProductEvent extends ProductEvent{
 
 // for user
 class LogInStateEvent extends ProductEvent{
-  String userName;
-  String password;
-  LogInStateEvent({required this.userName,required this.password}
-);}
+   UserEnities userEnities;
+
+  
+  LogInStateEvent({required this.userEnities,});
+
+  }
 
 
 class  SignInEvent extends ProductEvent{
-  String userName;
-  String password;
-  SignInEvent({required this.userName,required this.password});
+  UserEnities userEnities;
+
+  
+  SignInEvent({required this.userEnities,});
 }

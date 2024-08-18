@@ -65,7 +65,7 @@ Future<void> setUp() async {
   locator.registerLazySingleton(() => DeleteProductbyidUsecase(locator()));
   locator.registerLazySingleton(() => AddProductUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
-  locator.registerLazySingleton(() => SignUp(locator()));
+  locator.registerLazySingleton(() => SignUpUswcase(locator()));
   locator.registerLazySingleton(() => LoginUsecase(locator()));
 
   //! BLoC
@@ -76,6 +76,9 @@ Future<void> setUp() async {
     getProductByIdUseCase: locator(),
     addProductUseCase: locator(),
     updateProductUseCase: locator(),
+    signUpUsecase: locator(),
+    loginUsecase: locator(),
+
 
   ));
 }

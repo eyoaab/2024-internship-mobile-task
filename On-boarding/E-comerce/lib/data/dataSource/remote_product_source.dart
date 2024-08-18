@@ -19,6 +19,11 @@ abstract class ProductRemoteDataSource {
   Future<Either<Failure, bool>> ProductDelete(String productId);
   Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product);
   Future<Either<Failure, List<ProductsModel>>> getAllProduct() ;
+
+  // for user
+Future<Either<Failure, bool>> UserSignUp(UserEnities user);
+  Future<Either<Failure, bool>> UserLogIn(UserEnities user);
+
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
@@ -146,6 +151,54 @@ Future<Either<Failure, bool>> ProductAdd(SendProduct product) async {
     return const Left(ServerFailure('Server Failure: ----'));
   }
 }
+Future<Either<Failure, bool>> UserSignUp(UserEnities user) async {
+final Map<String, String> data = {
+      'name': user.name,
+      'email': user.username,
+      'password': user.password
+    };  
+    print('data from remote');
+    print(data);
+
+    final response = await client.post(
+      Uri.parse(Urls.SignUp()),
+      body: json.encode(data),
+      headers: {'Content-Type': 'application/json'},
+    ); 
+    print('sign up response');
+    print(response.statusCode);  
+    print(response.body); 
+    if (response.statusCode == 200) {
+    
+      return const Right(true); 
+    } else {
+
+     return const Right(false);
+    }
+
+}
+Future<Either<Failure, bool>> UserLogIn(UserEnities user) async {
+final Map<String, String> data = {
+      'email': user.username,
+      'password': user.password
+    };  
+ 
+
+    final response = await client.post(
+      Uri.parse(Urls.Login()),
+      body: json.encode(data),
+      headers: {'Content-Type': 'application/json'},
+    ); 
+    print(response.statusCode);   
+    if (response.statusCode == 200) {
+    
+      return const Right(true); 
+    } else {
+
+     return const Right(false);
+    }
+
+}
 
 
 
@@ -160,50 +213,6 @@ List<ProductsModel> parseProductList(String jsonString) {
   } else {
     return [];
   }
-}
-Future<Either<Failure, bool>> UserSignUp(UserEnities user) async {
-final Map<String, String> data = {
-      'username': user.username,
-      'password': user.password
-    };  
- 
-
-    final response = await client.put(
-      Uri.parse(Urls.updateProduct('examplw')),
-      body: json.encode(data),
-      headers: {'Content-Type': 'application/json'},
-    ); 
-    print(response.statusCode);   
-    if (response.statusCode == 200) {
-    
-      return const Right(true); 
-    } else {
-
-     return const Right(false);
-    }
-
-}
-Future<Either<Failure, bool>> UserLogIn(UserEnities user) async {
-final Map<String, String> data = {
-      'username': user.username,
-      'password': user.password
-    };  
- 
-
-    final response = await client.put(
-      Uri.parse(Urls.updateProduct('examplw')),
-      body: json.encode(data),
-      headers: {'Content-Type': 'application/json'},
-    ); 
-    print(response.statusCode);   
-    if (response.statusCode == 200) {
-    
-      return const Right(true); 
-    } else {
-
-     return const Right(false);
-    }
-
 }
 
 // to user

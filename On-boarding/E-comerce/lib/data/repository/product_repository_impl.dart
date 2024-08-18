@@ -1,5 +1,5 @@
 
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+// import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:dartz/dartz.dart';
 
@@ -153,9 +153,9 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, bool>> UserLogIn(UserEnities user)async{
     if (await networkInfo.isConnected) {
       try {
-        // final result = await remoteDataSource.UserSignUp(user);
+        final result = await remoteDataSource.UserLogIn(user);
      
-        if(1 == true) {
+        if(result == true) {
           return  const Right(true);
         }
         else {
@@ -170,20 +170,17 @@ class ProductRepositoryImpl implements ProductRepository {
   }
   @override
   Future<Either<Failure, bool>> UserSignUp(UserEnities user)async{
-    if (await networkInfo.isConnected) {
-      try {
-        // final result = await remoteDataSource.UserSignUp(user);
-        if(1 == true) {
-          return  const Right(true);
-        }
-        else {
-          return  const Right(false);
-        } 
-      } on ServerException {
+
+
+        final result = await remoteDataSource.UserSignUp(user);
+      
+        
+        result.fold(
+          (fail){return const Left(ServerFailure);},
+         (right){return Right(right);});
+
+     
         return const Left(ServerFailure('Failed to log in user'));
       }
-    } else {
-      return  const Left(ServerFailure('Failed to log in user'));
-    }
-  }
-}
+    } 
+  
