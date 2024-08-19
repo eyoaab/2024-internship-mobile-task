@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'Product/presentation/Pages/AddProduct/AddProduct.dart';
+import 'Product/presentation/Pages/Search/SearchProduct.dart';
+import 'Product/presentation/Pages/home/Home.dart';
+import 'Product/presentation/bloc/product_bloc.dart';
+import 'User/presentation/Pages/LogIn/login.dart';
+import 'User/presentation/Pages/Signup/signup.dart';
+import 'User/presentation/bloc/user_bloc.dart';
 import 'injection_container.dart';
-import 'presentation/Pages/AddProduct/AddProduct.dart';
-import 'presentation/Pages/LogIn/login.dart';
-import 'presentation/Pages/Search/SearchProduct.dart';
-import 'presentation/Pages/Signup/signup.dart';
-import 'presentation/Pages/home/Home.dart';
-import 'presentation/bloc/product_bloc.dart';
 
 
 
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<UserBloc>(
+          create:(context)=>locator<UserBloc>()),
         
         BlocProvider<ProductBloc>(
           create: (context) => locator<ProductBloc>(), 
@@ -48,9 +51,9 @@ class MyApp extends StatelessWidget {
             case '/signUp':
                 builder = (BuildContext context) => SignUpPage();
                 break;
-            // case '/Login':
-            //     builder = (BuildContext context) => LoginPage(); 
-            //     break;     
+            case '/home':
+                builder = (BuildContext context) => Home(); 
+                break;     
             default:
               throw Exception('Invalid route: ${settings.name}');
           }

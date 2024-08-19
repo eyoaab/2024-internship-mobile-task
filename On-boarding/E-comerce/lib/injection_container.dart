@@ -3,82 +3,86 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Product/data/dataSource/local_product_source.dart';
+import 'Product/data/dataSource/remote_product_source.dart';
+import 'Product/data/repository/product_repository_impl.dart';
+import 'Product/domain/repository/product_repository.dart';
+import 'Product/domain/usecase/add_product_usecase.dart';
+import 'Product/domain/usecase/delete_product_usecase.dart';
+import 'Product/domain/usecase/get_all_products.dart';
+import 'Product/domain/usecase/get_product_by_id.dart';
+import 'Product/domain/usecase/update_product_usecase.dart';
+import 'Product/presentation/bloc/product_bloc.dart';
+import 'User/Data/DataSource/LocalDataSource/LocalDataSource.dart';
+import 'User/Data/DataSource/RemoteDataSource/RemoteDateSource.dart';
+import 'User/Data/Repository/UserRepositoryImpl.dart';
+import 'User/Domaign/Repository/user_repository.dart';
+import 'User/Domaign/Usecases/login_usecase.dart';
+import 'User/Domaign/Usecases/signIn_usecase.dart';
+import 'User/presentation/bloc/user_bloc.dart';
 import 'core/Network/networl_info.dart';
-import 'data/dataSource/local_product_source.dart';
-import 'data/dataSource/remote_product_source.dart';
-import 'data/repository/product_repository_impl.dart';
-import 'domain/repository/product_repository.dart';
-import 'domain/usecase/add_product_usecase.dart';
-import 'domain/usecase/delete_product_usecase.dart';
-import 'domain/usecase/get_all_products.dart';
-import 'domain/usecase/get_product_by_id.dart';
-import 'domain/usecase/update_product_usecase.dart';
-import 'presentation/bloc/product_bloc.dart';
-import './domain/entitiy/user_entities.dart';
-import './domain/usecase/signIn_usecase.dart';
-import './domain/usecase/login_usecase.dart';
-
 
 final locator = GetIt.instance;
 
 Future<void> setUp() async {
   //! External Instances
-  print('http');
-  locator.registerLazySingleton(() => http.Client());
-
-  print('shared preference');
-  
-    final sharedPreferences = await SharedPreferences.getInstance();
-  print('SharedPreferences instance created');
+  final sharedPreferences = await SharedPreferences.getInstance();
   locator.registerSingleton<SharedPreferences>(sharedPreferences);
-  print('SharedPreferences registered with GetIt');
-  //! Core instances
-  print('connectivity');
-
-
+  locator.registerLazySingleton(() => http.Client());
   locator.registerLazySingleton(() => Connectivity());
+
+  //! Core instances
   locator.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(locator()));
 
   //! Data Sources
-  print('remote data sooce');
-
-
   locator.registerLazySingleton<ProductRemoteDataSource>(
-      () => ProductRemoteDataSourceImpl(locator()));
+      () => ProductRemoteDataSourceImpl(locator(),~));
   locator.registerLazySingleton<ProductLocalDataSource>(
       () => ProductLocalDataSourceImpl(store: locator()));
+      
+  locator.registerLazySingleton<UserLocalDataSource>(
+      () => UserLocalDataSourceImpl(sharedPreferences:locator()));
+  locator.registerLazySingleton<UserRemoteDataSource>(
+      () => UserRemoteDataSourceImpl(client: locator(), localDataSource: locator()));
+ 
 
   //! Repositories
-  print('product repo');
   locator.registerLazySingleton<ProductRepository>(
-    () => ProductRepositoryImpl(
-      remoteDataSource: locator(),
-      localDataSource: locator(),
-      networkInfo: locator(),
-    ),
-  );
+      () => ProductRepositoryImpl(
+            remoteDataSource: locator(),
+            localDataSource: locator(),
+            networkInfo: locator(),
+          ));
+
+  locator.registerLazySingleton<UserRepository>(
+      () => Userrepositoryimpl(
+            userRemoteDataSource: locator(),
+            localDataSource: locator(),
+            networkInfo: locator(),
+          ));
+
 
   //! Use Cases
-  print('product use case');
   locator.registerLazySingleton(() => AllProductUsecase(locator()));
-  locator.registerLazySingleton(() => ShowProductById(locator(),));
+  locator.registerLazySingleton(() => ShowProductById(locator()));
   locator.registerLazySingleton(() => DeleteProductbyidUsecase(locator()));
   locator.registerLazySingleton(() => AddProductUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
-  locator.registerLazySingleton(() => SignUpUswcase(locator()));
-  locator.registerLazySingleton(() => LoginUsecase(locator()));
+
+  locator.registerLazySingleton(() => SignUpUseCase(locator()));
+  locator.registerLazySingleton(() => LoginUseCase(locator()));
 
   //! BLoC
-  print('product bloc');
   locator.registerFactory(() => ProductBloc(
-    getAllProductsUseCase: locator(),
-    deleteProductUseCase: locator(),
-    getProductByIdUseCase: locator(),
-    addProductUseCase: locator(),
-    updateProductUseCase: locator(),
-    signUpUsecase: locator(),
-    loginUsecase: locator(),
+        getAllProductsUseCase: locator(),
+        deleteProductUseCase: locator(),
+        getProductByIdUseCase: locator(),
+        addProductUseCase: locator(),
+        updateProductUseCase: locator(),
+      ));
 
-
-  ));
+  locator.registerFactory(() => UserBloc(
+        loginUsecase: locator(),
+        signUpUsecase: locator(),
+      ));
 }
