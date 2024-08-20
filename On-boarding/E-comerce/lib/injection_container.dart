@@ -36,14 +36,14 @@ Future<void> setUp() async {
 
   //! Data Sources
   locator.registerLazySingleton<ProductRemoteDataSource>(
-      () => ProductRemoteDataSourceImpl(locator(),~));
+      () => ProductRemoteDataSourceImpl(locator()));
   locator.registerLazySingleton<ProductLocalDataSource>(
       () => ProductLocalDataSourceImpl(store: locator()));
       
   locator.registerLazySingleton<UserLocalDataSource>(
       () => UserLocalDataSourceImpl(sharedPreferences:locator()));
   locator.registerLazySingleton<UserRemoteDataSource>(
-      () => UserRemoteDataSourceImpl(client: locator(), localDataSource: locator()));
+      () => UserRemoteDataSourceImpl(client: locator(),));
  
 
   //! Repositories

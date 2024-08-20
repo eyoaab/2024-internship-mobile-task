@@ -10,16 +10,14 @@ import '../LocalDataSource/LocalDataSource.dart';
 
 abstract class UserRemoteDataSource {
   Future<Either<Failure, bool>> userSignUp(UserEnities user);
-  Future<Either<Failure, bool>> userLogIn(UserEnities user);
+  Future<Either<Failure, String>> userLogIn(UserEnities user);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final http.Client client;
-  final UserLocalDataSource localDataSource;
 
   UserRemoteDataSourceImpl({
     required this.client,
-    required this.localDataSource,
   });
 
   @override
@@ -48,7 +46,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<Either<Failure, bool>> userLogIn(UserEnities user) async {
+  Future<Either<Failure, String>> userLogIn(UserEnities user) async {
     try {
         // print(user);
 
@@ -65,11 +63,11 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       if (response.statusCode == 201) {
         final responseData = json.decode(response.body);
         final String token = responseData['data']['access_token'];
-        final isSaved = await localDataSource.saveToken(token);
+        // final isSaved = await localDataSource.saveToken(token);
    
-        return const Right(true);
+        return  Right(token);
       } else {
-        return const Right(false);
+        return  const Right('');
       }
     } catch (e) {
       print(e.toString());

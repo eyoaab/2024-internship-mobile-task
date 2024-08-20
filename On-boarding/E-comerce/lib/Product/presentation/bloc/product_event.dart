@@ -55,19 +55,3 @@ class AddProductEvent extends ProductEvent{
   List<Object> get props => [product];
 }
 
-// for user
-// class LogInStateEvent extends ProductEvent{
-//    UserEnities userEnities;
-
-  
-//   LogInStateEvent({required this.userEnities,});
-
-//   }
-
-
-// class  SignInEvent extends ProductEvent{
-//   UserEnities userEnities;
-
-  
-//   SignInEvent({required this.userEnities,});
-// }

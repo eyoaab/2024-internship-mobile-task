@@ -8,17 +8,16 @@ import '../../../core/constants/Url/url.dart';
 import '../../../core/error/exception.dart';
 import '../../../core/error/faliure.dart';
 import '../../domain/entitiy/product_entities.dart';
-import '../../../User/Domaign/Entities/user_entities.dart';
 import '../model/product_model.dart';
 import '../model/ptoduct_to_save.dart';
 
 
 abstract class ProductRemoteDataSource {  
   Future<ProductsModel> getProductById(String id);
-  Future<Either<Failure, bool>> ProductAdd(SendProduct product);
-  Future<Either<Failure, bool>> ProductDelete(String productId);
-  Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product);
-  Future<Either<Failure, List<ProductsModel>>> getAllProduct() ;
+  Future<Either<Failure, bool>> ProductAdd(SendProduct product,String token);
+  Future<Either<Failure, bool>> ProductDelete(String productId,String token);
+  Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product, String token);
+  Future<Either<Failure, List<ProductsModel>>> getAllProduct(String token) ;
 
   // for user
 // Future<Either<Failure, bool>> UserSignUp(UserEnities user);
@@ -44,11 +43,16 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
 
   @override
-Future<Either<Failure, List<ProductsModel>>> getAllProduct() async {
+Future<Either<Failure, List<ProductsModel>>> getAllProduct(String token) async {
   try {
+  final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token', 
+  };
 
     
     final response = await client.get(
+      headers: headers,
   Uri.parse(Urls.getAll())
 
 );
@@ -74,7 +78,13 @@ print(response.statusCode);
 }
 
     @override
-  Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product) async {
+  Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product,String token) async {
+final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token', 
+  };
+
+    
     final Map<String, String> data = {
       'name': product.name,
       'description': product.description,
@@ -85,7 +95,7 @@ print(response.statusCode);
     final response = await client.put(
       Uri.parse(Urls.updateProduct(productId)),
       body: json.encode(data),
-      headers: {'Content-Type': 'application/json'},
+      headers: headers,
     ); 
   print('on product update on remote');
     print(response.statusCode);   
@@ -103,10 +113,16 @@ print(response.statusCode);
 
 
      @override
-  Future<Either<Failure, bool>> ProductDelete(String productId,) async {
+  Future<Either<Failure, bool>> ProductDelete(String productId,String token) async {
+   
+
+     final headers = {
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token', 
+  };
     final response = await client.delete(
       Uri.parse(Urls.deleteProduct(productId)),
-      headers: {'Content-Type': 'application/json'},
+       headers: headers,
     );    
     if (response.statusCode == 200) {
       print('product deleted successfully');
@@ -122,11 +138,14 @@ print(response.statusCode);
 
 
 
-Future<Either<Failure, bool>> ProductAdd(SendProduct product) async {
+Future<Either<Failure, bool>> ProductAdd(SendProduct product,String token) async {
   try {
-
+      // print('token in remorte add');
+      // print(token);
 
     var request = http.MultipartRequest('POST', Uri.parse(Urls.addNewProduct()));
+    request.headers['Authorization'] = 'Bearer $token';
+
       request.fields['name'] = product.name;
       request.fields['price'] = product.price.toString();
       request.fields['description'] = product.description;

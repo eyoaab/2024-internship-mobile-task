@@ -7,8 +7,6 @@
   import '../../domain/usecase/delete_product_usecase.dart';
   import '../../domain/usecase/get_all_products.dart';
   import '../../domain/usecase/get_product_by_id.dart';
-  import '../../../User/Domaign/Usecases/login_usecase.dart';
-  import '../../../User/Domaign/Usecases/signIn_usecase.dart';
   import '../../domain/usecase/update_product_usecase.dart';
   import './product_event.dart';
   import './product_state.dart';
@@ -21,17 +19,14 @@
       final UpdateProductUsecase updateProductUseCase;
       final DeleteProductbyidUsecase deleteProductUseCase;
       final AddProductUsecase addProductUseCase;
-      // final LoginUsecase loginUsecase;
-      // final SignUpUswcase signUpUsecase; 
-
+     
 
     ProductBloc( { required this.getAllProductsUseCase,
                   required this.getProductByIdUseCase,
                   required this.updateProductUseCase,
                   required this.deleteProductUseCase,
                   required this.addProductUseCase  ,
-                  //  required this.loginUsecase,
-                  //  required this.signUpUsecase 
+               
                   }): super(IntialState()) {
         
         on<LoadAllProductEvent>((event,emit) async{
@@ -44,7 +39,6 @@
                 ); 
                 
         });
-  ;
 
       on<GetSingleProductEvent>((event,emit) async{
         
@@ -73,7 +67,8 @@
       on<DeleteProductEvent>((event,emit)async{
           emit(LoadingState());
           final result = await deleteProductUseCase.call_delete(event.Id);
-
+          print('====================================================');
+          print(11111);
               result.fold(
                 (error) => emit(ErrorState(message: error.toString())),             
                 (product) => emit(DeletedState(check: product))
@@ -87,35 +82,14 @@
 
               result.fold(
                 (error) => emit(ErrorState(message: error.toString())),                         
-                (product) => emit(AddState())
+                (product) => emit(AddState(check: product))
                 );
         
 
       });
       
-      // on<SignInEvent> ((event,emit)async{
-      //   emit(LoadingState());
-      //   final result = await signUpUsecase.call_SignUp(event.userEnities);
-      //   print('result from bloc');
-      //   print(result);
-
-      //   result.fold(
-      //       (error) => emit(ErrorState(message: error.toString())),
-      //       (token) => emit(LogedState(tokens:'response'))
-      //   );
-      // });
-
-      // on<LogInStateEvent> ((event,emit)async{
-      //   emit(LoadingState());
-      //   final result = await loginUsecase.call_login(event.userEnities);
-      //   print('result from bloc');
-      //   print(result);
-
-      //   result.fold(
-      //       (error) => emit(ErrorState(message: error.toString())),
-      //       (token) => emit(LogedState(tokens:'response'))
-      //   );
-      // });
+     
+  
     }
   }
 

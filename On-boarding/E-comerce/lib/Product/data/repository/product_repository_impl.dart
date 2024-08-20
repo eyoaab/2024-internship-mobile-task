@@ -38,9 +38,17 @@ class ProductRepositoryImpl implements ProductRepository {
          
         //   return Right(result);
         // }
+
+          final token = await localDataSource.getToken();
+        // print('token in repository implmentation in delete');
+        // print(token);
+
+
+
         print('no data is not from local');
-        final remoteProducts = await remoteDataSource.getAllProduct();
-        remoteProducts.fold((left){print('error in repo');}, 
+        final remoteProducts = await remoteDataSource.getAllProduct(token!);
+
+        remoteProducts.fold((left){}, 
         (rightProduct){
            Future<bool> x =  localDataSource.storeProduct(rightProduct);
            print('data saved fromm repo');
@@ -48,8 +56,8 @@ class ProductRepositoryImpl implements ProductRepository {
         });
        
        
-        // print('data in remote repo t');
-        // print(remoteProducts);
+       
+      
         
         return remoteProducts ;
       } on ServerException {
@@ -88,13 +96,24 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure,bool>> ProductDelete(String productId)async{
      if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.ProductDelete(productId);
-        if(result == true) {
-          return  const Right(true);
-        }
-        else {
-          return  const Right(false);
-        } 
+        final token = await localDataSource.getToken();
+        bool success = false;
+        // print('token in repository implmentation in delete');
+        // print(token);
+
+        final result = await remoteDataSource.ProductDelete(productId, token!);
+        result.fold((error){
+          success = false;
+        },
+         (answer){
+          if (answer == true){
+            success = true;
+          }
+          else{
+            success = false;
+          }
+         });
+       return Right(success);
        
       } on ServerException {
         return const Left(ServerFailure('Failed to delete product'));
@@ -110,14 +129,19 @@ class ProductRepositoryImpl implements ProductRepository {
     
      if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.ProductUpdate(productId,product);
-        if(result == true) {
-          return  const Right(true);
-        }
-        else {
-          return  const Right(false);
-        } 
-       
+        bool success = false;
+        final token = await localDataSource.getToken();
+
+
+        final result = await remoteDataSource.ProductUpdate(productId,product,token!);
+        result.fold((error){
+          success = false;
+        },
+         (answer){
+          success = answer;
+         });
+         return Right(success);
+
       } on ServerException {
         return const Left(ServerFailure('Failed to delete product'));
       }
@@ -130,16 +154,21 @@ class ProductRepositoryImpl implements ProductRepository {
   
 
   @override
-  Future<Either<Failure,bool>> ProductAdd(SendProduct product )async{
+  Future<Either<Failure,bool>> ProductAdd(SendProduct product)async{
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.ProductAdd(product);
-        if(result == true) {
-          return  const Right(true);
-        }
-        else {
-          return  const Right(false);
-        } 
+        final token = await localDataSource.getToken();
+        final result = await remoteDataSource.ProductAdd(product,token!);
+
+       bool success = false;
+       result.fold((faliure){
+        success = false;
+       },
+        (answer){
+          success = true;
+        });
+
+        return Right(success);
       } on ServerException {
         return const Left(ServerFailure('Failed to add product'));
       }

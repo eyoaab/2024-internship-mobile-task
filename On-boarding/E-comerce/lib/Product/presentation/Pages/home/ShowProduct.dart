@@ -7,22 +7,33 @@ import '../../bloc/product_state.dart';
 import '../../widgets/ShopingCard.dart';
 import '../Detail/Detail.dart';
 
-class ShowProduct extends StatelessWidget {
+class ShowProduct extends StatefulWidget {
+  @override
+  State<ShowProduct> createState() => _ShowProductState();
+}
+
+class _ShowProductState extends State<ShowProduct> {
+  @override
+  void initState() {
+    context.read<ProductBloc>().add(const LoadAllProductEvent());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     context.read<ProductBloc>().add(const LoadAllProductEvent());
-       return BlocBuilder<ProductBloc,ProductState>(
-          builder:(context,state){
-
-        if (state is LoadingState) {
-       
-
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is LoadedAllProductState) {
-       
-
-          return Expanded(
+       return BlocConsumer<ProductBloc,ProductState>(
+        listener: (context, state){
+          if (state is ErrorState){
+            showResponse(context,Icon(Icons.error), 'Failed to load products');
+          }
+        },
+          builder:(context,state)
+          { return 
+            state is LoadingState? const Center(child: CircularProgressIndicator()):
+            state is LoadedAllProductState? 
+        Expanded(
             child: ListView.builder(
+              
               itemCount: state.data.length,
               itemBuilder: (context, index) {
                 final product = state.data[index];
@@ -45,33 +56,8 @@ class ShowProduct extends StatelessWidget {
                 ));
               },
             ),
-          );
-        } else if (state is ErrorState) {
-      
-          return  Center(child: Text('Failed to load products: ${state.message}'));
-        } else if (state is DeletedState) {
-              context.read<ProductBloc>().add(const LoadAllProductEvent());
-              
-              showResponse(context,const Icon(Icons.abc),'saved');
-
-              Navigator.pushNamed(context,'/');
-                            return const Center(child: Text('Product deleted successfully.'));
-
-        } else if (state is UpdatedState) {
-              context.read<ProductBloc>().add(const LoadAllProductEvent());
-              
-              showResponse(context,const Icon(Icons.abc),'saved');
-
-              Navigator.pushNamed(context,'/');
-                            return const Center(child: Text('Product deleted successfully.'));
-
-        }
-        else {
-       
-
-          return const Center(child: Text('No products available.'));
-        }
-      },
+          ):Center(child: Text('Failed to load products'));
+        } 
     );
   }
 }

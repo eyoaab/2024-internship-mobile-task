@@ -9,6 +9,13 @@ abstract class ProductLocalDataSource {
   Future<ProductsModel> getSingleProduct(String Id);
   Future<bool> storeSingleProduct(ProductsModel updatedProduct);
 
+  // for the token
+   
+    Future<void> clearToken() ;
+     Future<void> saveToken(String token);
+      Future<String?> getToken();
+  
+
 }
 
 class ProductLocalDataSourceImpl extends ProductLocalDataSource {
@@ -62,6 +69,21 @@ class ProductLocalDataSourceImpl extends ProductLocalDataSource {
     final success = await store.setString(product.id, jsonEncode(product.toJson()));
     return success;
   
+  }
+
+  @override
+  Future<void> saveToken(String token) async {
+    await store.setString('auth_token', token);
+  }
+
+  @override
+  Future<String?> getToken() async {
+    return store.getString('auth_token');
+  }
+
+  @override
+  Future<void> clearToken() async {
+    await store.remove('auth_token');
   }
 
 

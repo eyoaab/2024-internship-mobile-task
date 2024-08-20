@@ -33,7 +33,25 @@ class Userrepositoryimpl implements UserRepository {
       final result = await userRemoteDataSource.userLogIn(user);
       print('result from repository ');
       print(result);
-      return result;
+      bool value = false;
+
+
+      result.fold((error){return const Left(ServerFailure('cant get the token'));}, 
+      (token){
+        print('token in repo');
+        print(token);
+        if(token.isEmpty){
+          value = false;
+        }
+        else{
+          localDataSource.saveToken(token);
+          print('token saved');
+          value = true;
+        }
+      });
+
+      return  Right(value);
+     
     } else {
       return const Left(NetworkFailure('No internet connection'));
     }

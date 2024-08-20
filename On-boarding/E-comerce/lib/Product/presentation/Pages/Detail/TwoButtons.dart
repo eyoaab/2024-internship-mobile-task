@@ -14,43 +14,31 @@ class Twobuttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
-      builder: (context, state) {
-        return Padding(
+    return Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+               
                 ElevatedButton(
-                  onPressed: () {
-                    // change state on bloc
-
-                    context
-                        .read<ProductBloc>()
-                        .add(DeleteProductEvent(product.id));
-                    // showResponse(context, const Ic);
-                    context
-                        .read<ProductBloc>()
-                        .add(const LoadAllProductEvent());
-
-                    Navigator.pushNamed(context, '/');
-                    showResponse(context, const Icon(Icons.info, size: 50,),'product deleted succesfully');
-                  },
-                  style: ElevatedButton.styleFrom(),
-                  child: const Text('DELETE'),
-                ),
+                        onPressed: () {
+                          // Trigger the delete product event
+                          context.read<ProductBloc>().add(DeleteProductEvent(product.id));
+                        },
+                        style: ElevatedButton.styleFrom(),
+                        child: const Text('DELETE'),
+                      ),
                 space(16),
                 OutlinedButton(
                   onPressed: () {
-                    //  context.read<ProductBloc>().add(UpdateProductEvent(product));
-
+                    // Navigate to the update profile page
                     Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UpdateProfile(product: product),
-                    ),
-                      );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateProfile(product: product),
+                      ),
+                    );
                   },
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: Colors.blue),
@@ -65,8 +53,7 @@ class Twobuttons extends StatelessWidget {
             ),
           ),
         );
-      },
-    );
+      
   }
 }
 

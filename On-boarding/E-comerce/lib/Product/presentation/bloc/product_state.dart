@@ -40,20 +40,20 @@ class UpdatedState extends ProductState{
   final check;
   const UpdatedState({required this.check});
 }
+
 class DeletedState extends ProductState{
-  final check;
+  final bool check;
   const DeletedState({required this.check});
   @override
   List<Object> get props => [check];
 }
-class AddState extends ProductState{}
 
-// for user
 
-// class LogedState extends ProductState{
-//   String tokens;
-//    LogedState({required this.tokens});
-// }
+class AddState extends ProductState{
+  final  bool check;
+  const AddState({required this.check});
+}
+
 
 
 
