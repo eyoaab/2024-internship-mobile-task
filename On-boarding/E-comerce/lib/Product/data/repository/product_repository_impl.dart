@@ -131,7 +131,8 @@ class ProductRepositoryImpl implements ProductRepository {
       try {
         bool success = false;
         final token = await localDataSource.getToken();
-
+        print("product on repo");
+        print(product);
 
         final result = await remoteDataSource.ProductUpdate(productId,product,token!);
         result.fold((error){

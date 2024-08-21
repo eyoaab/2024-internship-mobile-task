@@ -25,12 +25,12 @@ class SearchComponent extends StatelessWidget {
           const SizedBox(width: 8),
           Container(
             decoration: BoxDecoration(
-              color: Colors.blueAccent,
+              color: const Color.fromARGB(255, 63, 81, 243),
               borderRadius: BorderRadius.circular(30.0),
             ),
             child: IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, '/home');
               },
               icon: const Icon(Icons.list, color: Colors.white),
               padding: const EdgeInsets.all(16.0),

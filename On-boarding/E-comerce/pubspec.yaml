@@ -49,6 +49,7 @@ dependencies:
   mime: ^1.0.5
   file_picker: ^8.1.2
   fluttertoast: ^8.2.8
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +80,7 @@ flutter:
   assets:
     - assets/boots.jpg
     - assets/eyob.png
+    - assets/backGround.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

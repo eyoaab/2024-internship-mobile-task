@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:task_6/data/model/product_model.dart';
+import 'package:task_6/Product/data/model/product_model.dart';
 
 void main() {
   const testModel = ProductsModel(

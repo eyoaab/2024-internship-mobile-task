@@ -24,12 +24,17 @@ class _ShowProductState extends State<ShowProduct> {
        return BlocConsumer<ProductBloc,ProductState>(
         listener: (context, state){
           if (state is ErrorState){
-            showResponse(context,Icon(Icons.error), 'Failed to load products');
+            showResponse(context,const Icon(Icons.error), 'Failed to load products');
           }
         },
           builder:(context,state)
           { return 
-            state is LoadingState? const Center(child: CircularProgressIndicator()):
+
+            state is LoadingState? const Column(
+              mainAxisAlignment:MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+
+              children:[CircularProgressIndicator()]):
             state is LoadedAllProductState? 
         Expanded(
             child: ListView.builder(
@@ -56,7 +61,7 @@ class _ShowProductState extends State<ShowProduct> {
                 ));
               },
             ),
-          ):Center(child: Text('Failed to load products'));
+          ):const Center(child: Text('Failed to load products'));
         } 
     );
   }

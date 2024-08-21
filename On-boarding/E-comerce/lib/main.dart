@@ -7,6 +7,7 @@ import 'Product/presentation/Pages/home/Home.dart';
 import 'Product/presentation/bloc/product_bloc.dart';
 import 'User/presentation/Pages/LogIn/login.dart';
 import 'User/presentation/Pages/Signup/signup.dart';
+import 'User/presentation/Pages/SplashScreen/splashScreen.dart';
 import 'User/presentation/bloc/user_bloc.dart';
 import 'injection_container.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           WidgetBuilder builder;
           switch (settings.name) {
             case '/':
-              builder = (BuildContext context) => LoginPage();
+              builder = (BuildContext context) => SplashScreen();
               break;
             
             case '/add':
@@ -53,7 +54,10 @@ class MyApp extends StatelessWidget {
                 break;
             case '/home':
                 builder = (BuildContext context) => Home(); 
-                break;     
+                break;  
+             case '/login':
+                builder = (BuildContext context) => LoginPage(); 
+                break;       
             default:
               throw Exception('Invalid route: ${settings.name}');
           }

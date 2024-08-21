@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../Product/presentation/widgets/Widget_store.dart';
 import '../../../Domaign/Entities/user_entities.dart';
 import '../../bloc/user_bloc.dart';
 import '../../bloc/user_event.dart';
-import '../../bloc/user_state.dart'; // Import the UserState
+import '../../bloc/user_state.dart'; 
 
 class LoginPage extends StatefulWidget {
   @override
@@ -57,7 +58,6 @@ class _LoginPageState extends State<LoginPage> {
             _passwordController.clear();
           } else if (state is UserLoggedIn) {
             if (state.isLogedin) {
-              // showMessage(context, const Icon(Icons.info,size: 40,), 'U have signed succesfully');
               Navigator.pushReplacementNamed(context, '/home');
             } else {
               showMessage(
@@ -73,11 +73,7 @@ class _LoginPageState extends State<LoginPage> {
           }
         },
         builder: (context, state) {
-          if (state is UserLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+         
 
           return SingleChildScrollView(
             child: Center(
@@ -85,25 +81,50 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 80.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    const Text(
-                      'ECOM',
-                      style: TextStyle(
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                    Container(
+                      width: 130,
+                      decoration:  BoxDecoration(
+                        boxShadow:  [ BoxShadow(
+                              color: Colors.black.withOpacity(0.2),
+                              spreadRadius: 2.0,
+                              blurRadius: 5.0,
+                              offset: const Offset(0.0, 4.0),
+                            ),],
+                          border: Border.all(
+                          color: const Color.fromARGB(255, 0, 0, 0),
+                          width: 1.0,
+                          
+                        ),
+                    color: Colors.white, 
+                    borderRadius: const  BorderRadius.all(Radius.circular(10),),
+                    
+
                       ),
+                      child:
+                    
+                     Text(
+                        'ECOM',
+                        style: GoogleFonts.caveatBrush(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w700,
+                        color: const Color.fromRGBO(63, 81, 243, 1),),
+                      
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 10),
-                    const Center(
+                  ),
+                    const SizedBox(height: 40),
+                     Center(
                       child: Text(
                         'Sign in to your account',
-                        style: TextStyle(fontSize: 23),
+                        style: GoogleFonts.caveatBrush(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500,
+                        color:const  Color.fromARGB(255, 0, 0, 0),
+                      ),
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
                     TextField(
                       controller: _usernameController,
                       decoration: InputDecoration(
@@ -111,10 +132,12 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        prefixIcon: const Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person,color:Color.fromARGB(255, 63, 81, 243)),
                       ),
                     ),
+
                     const SizedBox(height: 20),
+
                     TextField(
                       controller: _passwordController,
                       obscureText: true,
@@ -123,38 +146,64 @@ class _LoginPageState extends State<LoginPage> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        prefixIcon: const Icon(Icons.lock),
+                        prefixIcon: const Icon(Icons.lock,color:Color.fromARGB(255, 63, 81, 243)),
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    ElevatedButton(
-                      onPressed: logIn,
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        backgroundColor: Colors.blue,
-                      ),
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
+                    const SizedBox(height: 40),
+                   SizedBox(
+                  width: double.infinity, 
+                  child: ElevatedButton(    
+                  onPressed: logIn,
+                  style: ElevatedButton.styleFrom(       
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  backgroundColor: const  Color.fromRGBO(63, 81, 243, 1),
+                ),
+                child: state is UserLoading
+        ? const CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          )
+        :
+                 const Text(
+                  'Login',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
+            ,
+            const SizedBox(height: 40,),
+                    TextButton(
+                onPressed: goToSignUpPage,
+                child: RichText(
+                  text:const  TextSpan(
+                    text: "Don't have an account? ",
+                    style:  TextStyle(
+                      color: Colors.black, 
+                      fontSize: 16,
+                    ),
+                    children: [
+                      
+                      TextSpan(
+                        
+                        text: 'Sign up',
+                        style:  TextStyle(
+                          color:  Color.fromRGBO(63, 81, 243, 1), 
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 70),
-                    TextButton(
-                      onPressed: goToSignUpPage,
-                      child: const Text(
-                        "Don't have an account? Sign up",
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
+                    ],
+                  ),
+                ),
+              ),
+
+
+                    
                   ],
                 ),
               ),

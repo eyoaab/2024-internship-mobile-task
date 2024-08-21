@@ -46,32 +46,32 @@ class _CatagoryState extends State<Catagory> {
             },
           ),
           space(16),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                final category = _categoryController.text;
-                final minPrice = _minPrice;
-                final maxPrice = _maxPrice;
-              },
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 1,
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/');
-                  },
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 3, 77, 138),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text('APPLAY',
-                      style: TextStyle(
-                          color:  Color.fromARGB(255, 255, 255, 255))),
-                ),
-              ),
-            ),
-          ),
+       Center(
+  child: SizedBox(
+    width: double.infinity, // Makes the button take up the full width
+    child: ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/home');
+      },
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        backgroundColor: const Color.fromARGB(255, 63, 81, 243),
+      ),
+      child: const Text(
+        'Apply',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  ),
+)
+
         ],
       ),
     );

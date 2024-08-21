@@ -85,11 +85,12 @@ final headers = {
   };
 
     
-    final Map<String, String> data = {
+    final Map<String, dynamic> data = {
       'name': product.name,
       'description': product.description,
-      'price': '${product.price}'
+      'price': product.price
     };  
+    print(product);
  
 
     final response = await client.put(
@@ -97,8 +98,9 @@ final headers = {
       body: json.encode(data),
       headers: headers,
     ); 
-  print('on product update on remote');
-    print(response.statusCode);   
+    // print('data on remote');
+    // print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       print('product updated successfully');
     

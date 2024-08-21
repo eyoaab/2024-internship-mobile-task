@@ -5,6 +5,7 @@ import '../../../domain/entitiy/product_entities.dart';
 import '../../bloc/product_bloc.dart';
 import '../../bloc/product_event.dart';
 import '../../bloc/product_state.dart';
+import '../../widgets/Widget_store.dart';
 import 'Description.dart';
 import 'DetailPageUpperComponent.dart';
 import 'NumbersRow.dart';
@@ -18,86 +19,75 @@ class Detail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: const Icon(Icons.arrow_back),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/home');
+            },
+            child:  const Icon(Icons.chevron_left, color: Colors.blue,size:40),
+      
+          ),
+          title: const Text('Product Details'),
         ),
-        title: const Text('Product Details'),
-      ),
-      body: BlocConsumer<ProductBloc, ProductState>(
-        listener: (context, state) {
-          if (state is DeletedState && state.check == true) {
-            // showResponse(context, Icon(Icons.abc,),'product deleted successfully' );
+        body: BlocConsumer<ProductBloc, ProductState>(
+          listener: (context, state) {
+            if (state is DeletedState && state.check == true) {
+            
+      
+              Navigator.pushNamed(context, '/home');
+              showMessage(context, const Icon(Icons.error), 'Product deleted  successfully');
+
+            }  else if (state is DeletedState && state.check == false) {
+              Navigator.pushNamed(context, '/home');
+              showMessage(context, const Icon(Icons.error), 'Product not deleted');
+
+            }
+      
+            else if (state is ErrorState) {
+            
+              showMessage(context, const Icon(Icons.error), state.message);
+
+      
+            }
+          },
+          builder: (context, state) {
            
-            // ScaffoldMessenger.of(context).showSnackBar(
-              // const SnackBar(content: Text('Product deleted successfully!')),
-            // );
-
-            print('deleted successfully');
-            context.read<ProductBloc>().add(const LoadAllProductEvent());
-            Navigator.pushNamed(context, '/home');
-          }  else if (state is DeletedState && state.check == false) {
-          
-      // showResponse(context, Icon(Icons.abc,),'product not deleted successfully' );
-
-            // Navigator.pop(context);
-            print('not deleteddeleted successfully');
-            // Navigator.pushNamed(context, '/home');
-
-
-
-
-          }
-
-          else if (state is ErrorState) {
-            // Show error message
-      // showResponse(context, const Icon(Icons.abc,),'error happend' );
-              print('error occured ');
-if (Navigator.canPop(context) && !Navigator.of(context).userGestureInProgress) {
-  // Navigator.pushNamed(context, '/home');
-}
-
-          }
-        },
-        builder: (context, state) {
-         
-
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Detailpageuppercomponent(
-                  path: product.imageUrl,
-                  title: product.name,
-                  description: product.description,
-                  price: product.price,
-                  rating: 1,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SizedBox(
-                    height: 80,
-                    child: NumbersRow(),
+      
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Detailpageuppercomponent(
+                    path: product.imageUrl,
+                    title: product.name,
+                    description: product.description,
+                    price: product.price,
+                    rating: 1,
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: Description(text: product.description),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: Twobuttons(product: product),
-                ),
-              ],
-            ),
-          );
-        },
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: SizedBox(
+                      height: 80,
+                      child: NumbersRow(),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Description(text: product.description),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Twobuttons(product: product),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

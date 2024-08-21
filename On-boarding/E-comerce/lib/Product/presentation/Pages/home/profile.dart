@@ -14,10 +14,9 @@ class Profile extends StatelessWidget {
               borderRadius: BorderRadius.circular(25.0),
               child: Image.asset(
                 'assets/eyob.png',
-                // 'assets/boots.jpg',
-//
-                height: 80,
-                width: 80,
+
+                height: 60,
+                width: 60,
                 fit: BoxFit.cover,
               ),
             ),
@@ -49,7 +48,7 @@ class Profile extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, '/search');
               },
-              child: const Icon(Icons.search),
+              child: const Icon(Icons.notification_add),
             ),
           ],
         ),

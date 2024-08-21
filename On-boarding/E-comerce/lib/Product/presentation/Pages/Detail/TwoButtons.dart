@@ -9,71 +9,75 @@ import '../UpdateProfile/UpdateProfile.dart';
 
 class Twobuttons extends StatelessWidget {
   final ProductEnities product;
-
   const Twobuttons({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-               
-                ElevatedButton(
-                        onPressed: () {
-                          // Trigger the delete product event
-                          context.read<ProductBloc>().add(DeleteProductEvent(product.id));
-                        },
-                        style: ElevatedButton.styleFrom(),
-                        child: const Text('DELETE'),
+    return BlocListener<ProductBloc, ProductState>(
+      listener: (context, state) {
+        
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BlocBuilder<ProductBloc, ProductState>(
+                builder: (context, state) {
+                  if (state is LoadingState) {
+                    return ElevatedButton(
+                      onPressed: null, 
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
                       ),
-                space(16),
-                OutlinedButton(
-                  onPressed: () {
-                    // Navigate to the update profile page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UpdateProfile(product: product),
+                      child: const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          strokeWidth: 2.0,
+                        ),
                       ),
                     );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Colors.blue),
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: const Text(
-                    'UPDATE',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  }
+                  return ElevatedButton(
+                    onPressed: () {
+                      context.read<ProductBloc>().add(DeleteProductEvent(product.id));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    child: const Text(
+                      'DELETE',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(width: 20),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpdateProfile(product: product),
+                    ),
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.blue),
+                  backgroundColor: Colors.blue,
                 ),
-              ],
-            ),
+                child: const Text(
+                  'UPDATE',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
           ),
-        );
-      
-  }
-}
-
-void showResponse(BuildContext context, Icon icin, String message) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        icon: icin,
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 21),
         ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
+      ),
+    );
+  }
 }

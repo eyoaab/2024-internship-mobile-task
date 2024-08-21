@@ -1,18 +1,15 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-
 import '../../../domain/entitiy/product_entities.dart';
 import '../../../presentation/bloc/product_bloc.dart';
 import '../../../presentation/bloc/product_event.dart';
-
+import '../../../presentation/bloc/product_state.dart';  
 
 class UpdateProfile extends StatefulWidget {
   final ProductEnities product;
 
-   UpdateProfile({Key? key, required this.product}) : super(key: key);
+  UpdateProfile({Key? key, required this.product}) : super(key: key);
 
   @override
   _UpdateProfileState createState() => _UpdateProfileState();
@@ -31,13 +28,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _descriptionController.text = widget.product.description;
   }
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _priceController.dispose();
-    _descriptionController.dispose();
-    super.dispose();
-  }
+ 
 
   Future<void> _saveProduct() async {
     final updatedProduct = ProductEnities(
@@ -49,61 +40,127 @@ class _UpdateProfileState extends State<UpdateProfile> {
     );
 
     context.read<ProductBloc>().add(UpdateProductEvent(updatedProduct));
-
-    Navigator.pushNamed(context, '/');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Update Product'),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(labelText: 'Name'),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _priceController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(labelText: 'Price'),
-                ),
-                const SizedBox(height: 16.0),
-                TextFormField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(labelText: 'Description'),
-                ),
-                const SizedBox(height: 16.0),
-                 Container(
-                  height: 230,
-                  width:190,
-                  child:Image.network(widget.product.imageUrl)
-                 ,),
-                const SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                  ElevatedButton(
-                  onPressed: ()=> Navigator.pop(context),
-                  child: const Text('Cancel'),
-                ),
-               const  SizedBox(width:20),
-                ElevatedButton(
-                  onPressed: _saveProduct,
-                  child: const Text('Save'),
-                ),
-
-                ],)
-                
-              ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Update Product'),
+          backgroundColor:const  Color.fromARGB(255, 255, 255, 255),
+          leading: IconButton(icon:const Icon(Icons.chevron_left, color: Colors.blue,size:40),
+          onPressed: (){Navigator.pop(context);}
+),
+          
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: 'Product Name',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      prefixIcon: Icon(Icons.label),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: _priceController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Price',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      prefixIcon: const Icon(Icons.attach_money),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: _descriptionController,
+                    decoration: InputDecoration(
+                      labelText: 'Description',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      prefixIcon: Icon(Icons.description),
+                    ),
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 20.0),
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: SizedBox(
+                        height: 230,
+                        width: 290,
+                        child: Image.network(
+                          widget.product.imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () => Navigator.pop(context),
+                        icon: Icon(Icons.cancel),
+                        label: Text('Cancel',style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0,
+                            vertical: 12.0,
+                          ),
+                          textStyle:const  TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      BlocBuilder<ProductBloc, ProductState>(
+                        builder: (context, state) {
+                          return ElevatedButton.icon(
+                            onPressed:
+                                state is LoadingState ? null : _saveProduct,
+                            icon: state is LoadingState
+                                ? const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2.5,
+                                      valueColor:
+                                          AlwaysStoppedAnimation<Color>(
+                                              Colors.white),
+                                    ),
+                                  )
+                                : const Icon(Icons.save,color:Colors.white),
+                            label: state is LoadingState
+                                ? const Text('Saving...',style: TextStyle(color: Colors.white),)
+                                : const Text('Save',style: TextStyle(color: Colors.white)),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color.fromARGB(255, 0, 48, 138),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0,
+                                vertical: 12.0,
+                              ),
+                              textStyle: const TextStyle(fontSize: 16),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

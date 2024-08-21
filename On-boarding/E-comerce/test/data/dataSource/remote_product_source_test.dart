@@ -4,10 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:task_6/Product/data/dataSource/remote_product_source.dart';
+import 'package:task_6/Product/data/model/product_model.dart';
 import 'package:task_6/core/constants/Url/url.dart';
 import 'package:task_6/core/error/exception.dart';
-import 'package:task_6/data/dataSource/remote_product_source.dart';
-import 'package:task_6/data/model/product_model.dart';
 
 
 import 'remote_product_source_test.mocks.dart';

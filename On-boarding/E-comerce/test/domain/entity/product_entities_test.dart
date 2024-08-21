@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:task_6/domain/entitiy/product_entities.dart';
+import 'package:task_6/Product/domain/entitiy/product_entities.dart';
 
 void main() {
   const testEntity1 = ProductEnities(

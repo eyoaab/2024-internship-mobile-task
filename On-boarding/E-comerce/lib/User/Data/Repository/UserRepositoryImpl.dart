@@ -31,21 +31,16 @@ class Userrepositoryimpl implements UserRepository {
   Future<Either<Failure, bool>> logIn(UserEnities user) async {
     if (await networkInfo.isConnected) {
       final result = await userRemoteDataSource.userLogIn(user);
-      print('result from repository ');
-      print(result);
       bool value = false;
 
 
       result.fold((error){return const Left(ServerFailure('cant get the token'));}, 
       (token){
-        print('token in repo');
-        print(token);
         if(token.isEmpty){
           value = false;
         }
         else{
           localDataSource.saveToken(token);
-          print('token saved');
           value = true;
         }
       });
@@ -66,8 +61,6 @@ class Userrepositoryimpl implements UserRepository {
   Future<Either<Failure, String?>> getToken() async {
     final token = await localDataSource.getToken();
     if (token != null) {
-      print('token requested from implmentation');
-      print(token);
       return Right(token);
     } else {
       return const Left(CacheFailure('No token found'));

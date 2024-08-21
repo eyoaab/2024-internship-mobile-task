@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 import '../../../../core/constants/Url/url.dart';
 import '../../../../core/error/faliure.dart';
 import '../../../Domaign/Entities/user_entities.dart';
-import '../LocalDataSource/LocalDataSource.dart';
 
 abstract class UserRemoteDataSource {
   Future<Either<Failure, bool>> userSignUp(UserEnities user);
@@ -15,7 +14,6 @@ abstract class UserRemoteDataSource {
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final http.Client client;
-
   UserRemoteDataSourceImpl({
     required this.client,
   });
@@ -32,8 +30,8 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
         },
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       );
-        print('response for sign up');
-        print(response.statusCode);
+        // print('response for sign up');
+        // print(response.statusCode);
       if (response.statusCode == 201) {
        
         return const Right(true);
@@ -48,29 +46,24 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<Either<Failure, String>> userLogIn(UserEnities user) async {
     try {
-        // print(user);
-
       final response = await client.post(
         Uri.parse(Urls.Login()),
         body: {
           'email': user.username,
-          'password': user.password,
+          'password': user.password,  
         },
-        // headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       );
    
 
       if (response.statusCode == 201) {
         final responseData = json.decode(response.body);
         final String token = responseData['data']['access_token'];
-        // final isSaved = await localDataSource.saveToken(token);
    
         return  Right(token);
       } else {
         return  const Right('');
       }
     } catch (e) {
-      print(e.toString());
       return Left(ServerFailure('Failed to log in: ${e.toString()}'));
     }
   }

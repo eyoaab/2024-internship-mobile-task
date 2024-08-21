@@ -13,8 +13,7 @@ class LoginUseCase {
 
   Future<Either<Failure, bool>> call(UserEnities user) async {
     final result =  await repository.logIn(user);
-    print('result in usecase');
-    print(result);
+   
     return result;
   }
 }

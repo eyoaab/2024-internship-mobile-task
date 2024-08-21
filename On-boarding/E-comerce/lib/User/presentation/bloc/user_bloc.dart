@@ -23,7 +23,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     required this.signUpUsecase,
   }) : super(UserInitial()){
       
-   print('Welcome to user bloc...');
 
    
     
@@ -37,11 +36,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     });
 
     on<LoginEvent> ((event,emit) async{
-      ('request accepted in blobc');
        emit(UserLoading());
     final result = await loginUsecase.call(event.userEnities);
-    print('result from bloc');
-    print(result);
     
     result.fold(
       (failure) => emit(UserError('failed to load')),
