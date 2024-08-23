@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
             case '/add':
               builder = (BuildContext context) => AddProduct();
               break;
-            case '/search':
-              builder = (BuildContext context) => Searchproduct();
-              break;
+            // case '/search':
+            //   builder = (BuildContext context) => Search();
+            //   break;
             case '/signUp':
                 builder = (BuildContext context) => SignUpPage();
                 break;

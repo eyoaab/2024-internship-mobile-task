@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/Network/networl_info.dart';
 import '../../../core/error/faliure.dart';
-import '../../Domaign/Entities/user_entities.dart';
-import '../../Domaign/Repository/user_repository.dart';
+import '../../Domain/Entities/user_entities.dart';
+import '../../Domain/Repository/user_repository.dart';
 import '../DataSource/LocalDataSource/LocalDataSource.dart';
 import '../DataSource/RemoteDataSource/RemoteDateSource.dart';
 

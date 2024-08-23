@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_6/User/Data/DataSource/RemoteDataSource/RemoteDateSource.dart';
-import 'package:task_6/User/Domaign/Entities/user_entities.dart';
+import 'package:task_6/User/Domain/Entities/user_entities.dart';
 import 'package:task_6/core/error/faliure.dart';
 
 import '../../../helper/helper.mocks.dart';

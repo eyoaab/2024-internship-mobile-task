@@ -7,7 +7,7 @@ import 'package:task_6/core/error/exception.dart';
 import 'package:task_6/core/error/faliure.dart';
 
 
-import '../../helper/helper.mocks.dart';
+import '../../../helper/helper.mocks.dart';
 
 
 void main() {

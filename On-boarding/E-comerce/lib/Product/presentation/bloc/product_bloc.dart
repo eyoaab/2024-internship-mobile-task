@@ -1,6 +1,8 @@
 
 
-  import 'package:bloc/bloc.dart';
+  import 'dart:developer';
+
+import 'package:bloc/bloc.dart';
   import 'package:flutter_bloc/flutter_bloc.dart';
 
   import '../../domain/usecase/add_product_usecase.dart';
@@ -53,9 +55,9 @@
 
       on<UpdateProductEvent>((event,emit) async{
           emit(LoadingState());
-          print('update onrequest bloc');
+          log('update onrequest bloc');
           final result = await updateProductUseCase.call_update(event.product.id,event.product);
-          print('update response on bloc');
+          log('update response on bloc');
 
 
               result.fold(
@@ -67,8 +69,8 @@
       on<DeleteProductEvent>((event,emit)async{
           emit(LoadingState());
           final result = await deleteProductUseCase.call_delete(event.Id);
-          print('====================================================');
-          print(11111);
+          log('====================================================');
+         
               result.fold(
                 (error) => emit(ErrorState(message: error.toString())),             
                 (product) => emit(DeletedState(check: product))

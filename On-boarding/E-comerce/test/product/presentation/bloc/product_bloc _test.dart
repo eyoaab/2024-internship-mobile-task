@@ -9,7 +9,7 @@ import 'package:task_6/Product/presentation/bloc/product_event.dart';
 import 'package:task_6/Product/presentation/bloc/product_state.dart';
 import 'package:task_6/core/error/faliure.dart';
 
-import '../../helper/helper.mocks.dart';
+import '../../../helper/helper.mocks.dart';
 
 void main() {
   late  MockShowProductById mockShowProductById;
@@ -63,21 +63,6 @@ void main() {
       act: (bloc) => bloc.add(GetSingleProductEvent(testId)),
       expect: () =>
           [LoadingState(),  const LoadedSingleProductState(product: testProduct)]);
-
-
-// blocTest<ProductBloc,ProductState>(
-//   'shoul return [loading state] [added state] the ',
-//   build: (){
-//     when(mockAddProductUsecase.call_add(testProduct)).thenAnswer((_)async=>const Right(true));
-//     return productBloc;
-//   },
-
-//   act:(bloc) => bloc.add(AddProductEvent(testProduct)),
-//   expect:()=> [LoadingState(),AddState(check: null)]
-// );
-
-
-
   blocTest<ProductBloc, ProductState>(
       'should emit [ProductLoading, GetAllProducts] when data is gotten successfully',
       build: () {
@@ -121,15 +106,6 @@ void main() {
           bloc.add(UpdateProductEvent(testProduct)),
       expect: () => [LoadingState(),const UpdatedState(check: true)]);
 
-  // blocTest<ProductBloc, ProductState>(
-  //     'should emit [ProductLoading] when insert successful',
-  //     build: () {
-  //       when(mockAddProductUsecase.call_add(testProduct))
-  //           .thenAnswer((_) async => const Right(true));
-  //       return productBloc;
-  //     },
-  //     act: (bloc) => bloc.add(AddProductEvent(testProduct)),
-  //     expect: () => [LoadingState(),AddState()]);
 
   blocTest<ProductBloc, ProductState>(
       'should emit [ProductLoading, ProductLoadFailure] when get data is unsuccessful',

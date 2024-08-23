@@ -89,7 +89,7 @@ class _AddProductState extends State<AddProduct> {
               title: const Text('Add Product',textAlign: TextAlign.end,),
             ),
             body: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(25.0,0,25,15),
+              padding: const EdgeInsets.fromLTRB(25.0,0,25,15), 
             
 
               child: Column(

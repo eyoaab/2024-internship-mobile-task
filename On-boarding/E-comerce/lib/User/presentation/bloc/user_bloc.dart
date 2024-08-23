@@ -5,8 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/error/faliure.dart';
-import '../../Domaign/Usecases/login_usecase.dart';
-import '../../Domaign/Usecases/signIn_usecase.dart';
+import '../../Domain/Usecases/login_usecase.dart';
+import '../../Domain/Usecases/signIn_usecase.dart';
 import 'user_event.dart';
 import 'user_state.dart';
 

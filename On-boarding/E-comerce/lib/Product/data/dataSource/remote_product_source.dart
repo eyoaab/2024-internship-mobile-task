@@ -18,11 +18,6 @@ abstract class ProductRemoteDataSource {
   Future<Either<Failure, bool>> ProductDelete(String productId,String token);
   Future<Either<Failure, bool>> ProductUpdate(String productId, ProductEnities product, String token);
   Future<Either<Failure, List<ProductsModel>>> getAllProduct(String token) ;
-
-  // for user
-// Future<Either<Failure, bool>> UserSignUp(UserEnities user);
-//   Future<Either<Failure, bool>> UserLogIn(UserEnities user);
-
 }
 
 class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:task_6/User/Data/Model/user_model.dart';
-import 'package:task_6/User/Domaign/Entities/user_entities.dart';
+import 'package:task_6/User/Domain/Entities/user_entities.dart';
 void main() {
   const testUserModel = UserModel(
     name: 'Test User',

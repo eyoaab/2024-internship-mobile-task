@@ -9,6 +9,9 @@ import 'package:task_6/Product/domain/usecase/get_all_products.dart';
 import 'package:task_6/Product/domain/usecase/get_product_by_id.dart';
 import 'package:task_6/Product/domain/usecase/update_product_usecase.dart';
 import 'package:task_6/Product/presentation/bloc/product_bloc.dart';
+import 'package:task_6/User/Domain/Usecases/login_usecase.dart';
+import 'package:task_6/User/Domain/Usecases/signIn_usecase.dart';
+import 'package:task_6/User/presentation/Pages/LogIn/login.dart';
 import 'package:task_6/core/Network/networl_info.dart';
 
 
@@ -24,6 +27,8 @@ import 'package:task_6/core/Network/networl_info.dart';
   DeleteProductbyidUsecase,
   AddProductUsecase,
   ProductBloc ,
+  LoginUseCase,
+  SignUpUseCase
 
   
 ])

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../Product/presentation/widgets/Widget_store.dart';
-import '../../../Domaign/Entities/user_entities.dart';
+import '../../../Domain/Entities/user_entities.dart';
 import '../../bloc/user_bloc.dart';
 import '../../bloc/user_event.dart';
 import '../../bloc/user_state.dart'; 

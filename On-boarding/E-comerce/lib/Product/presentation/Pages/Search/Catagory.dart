@@ -48,7 +48,7 @@ class _CatagoryState extends State<Catagory> {
           space(16),
        Center(
   child: SizedBox(
-    width: double.infinity, // Makes the button take up the full width
+    width: double.infinity, 
     child: ElevatedButton(
       onPressed: () {
         Navigator.pushNamed(context, '/home');

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../../core/constants/Url/url.dart';
 import '../../../../core/error/faliure.dart';
-import '../../../Domaign/Entities/user_entities.dart';
+import '../../../Domain/Entities/user_entities.dart';
 
 abstract class UserRemoteDataSource {
   Future<Either<Failure, bool>> userSignUp(UserEnities user);

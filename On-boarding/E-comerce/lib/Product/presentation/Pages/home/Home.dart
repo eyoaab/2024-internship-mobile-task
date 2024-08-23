@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../bloc/product_bloc.dart';
 import '../../bloc/product_event.dart';
 import '../../widgets/Widget_store.dart';
+import '../Search/SearchProduct.dart';
 import 'ShowProduct.dart';
 import 'profile.dart';
 
@@ -58,7 +59,15 @@ class Home extends StatelessWidget {
             ),
           ),
            IconButton(onPressed: (){
-            Navigator.pushNamed(context, '/search');
+            // Navigator.pushNamed(context, '/search');
+             (){
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Search(filtered: []),
+                    ),
+                      );
+                  };
 
           }, icon: const Icon(
             Icons.search, 

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entitiy/product_entities.dart';
 import '../../bloc/product_bloc.dart';
-import '../../bloc/product_event.dart';
 import '../../bloc/product_state.dart';
 import '../../widgets/Widget_store.dart';
 import 'Description.dart';

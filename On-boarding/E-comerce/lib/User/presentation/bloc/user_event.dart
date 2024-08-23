@@ -2,7 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 
-import '../../Domaign/Entities/user_entities.dart';
+import '../../Domain/Entities/user_entities.dart';
 
 sealed class UserEvent extends Equatable {
   const UserEvent();

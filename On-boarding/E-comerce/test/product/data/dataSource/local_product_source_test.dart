@@ -8,7 +8,7 @@ import 'package:task_6/Product/data/dataSource/local_product_source.dart';
 import 'package:task_6/Product/data/model/product_model.dart';
 import 'package:task_6/core/error/exception.dart';
 
-import '../../helper/helper.mocks.dart';
+import '../../../helper/helper.mocks.dart';
 
 
 @GenerateNiceMocks([MockSpec<SharedPreferences>()])

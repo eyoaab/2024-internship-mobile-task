@@ -5,6 +5,7 @@ import '../../bloc/product_bloc.dart';
 import '../../bloc/product_event.dart';
 import '../../bloc/product_state.dart';
 import '../../widgets/ShopingCard.dart';
+import '../../widgets/Widget_store.dart';
 import '../Detail/Detail.dart';
 
 class ShowProduct extends StatefulWidget {
@@ -24,7 +25,7 @@ class _ShowProductState extends State<ShowProduct> {
        return BlocConsumer<ProductBloc,ProductState>(
         listener: (context, state){
           if (state is ErrorState){
-            showResponse(context,const Icon(Icons.error), 'Failed to load products');
+            showMessage(context,const Icon(Icons.error), 'Failed to load products');
           }
         },
           builder:(context,state)
@@ -69,28 +70,4 @@ class _ShowProductState extends State<ShowProduct> {
 
 
 
-void showResponse(BuildContext context, Icon icin, String message) {
-  showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        icon: icin,
-        content: Text(
-          message,
-          style: const TextStyle(fontSize: 21),
-        ),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () { 
-            context.read<ProductBloc>().add(const LoadAllProductEvent());
 
-
-              Navigator.of(context).pop();},
-
-          child: const Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
-}

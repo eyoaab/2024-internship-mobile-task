@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entitiy/product_entities.dart';
 import '../../data/model/ptoduct_to_save.dart';
-import '../../../User/Domaign/Entities/user_entities.dart';
+import '../../../User/Domain/Entities/user_entities.dart';
 
 abstract class ProductEvent extends Equatable {
   const ProductEvent();

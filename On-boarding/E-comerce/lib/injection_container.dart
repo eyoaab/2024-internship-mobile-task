@@ -16,9 +16,9 @@ import 'Product/presentation/bloc/product_bloc.dart';
 import 'User/Data/DataSource/LocalDataSource/LocalDataSource.dart';
 import 'User/Data/DataSource/RemoteDataSource/RemoteDateSource.dart';
 import 'User/Data/Repository/UserRepositoryImpl.dart';
-import 'User/Domaign/Repository/user_repository.dart';
-import 'User/Domaign/Usecases/login_usecase.dart';
-import 'User/Domaign/Usecases/signIn_usecase.dart';
+import 'User/Domain/Repository/user_repository.dart';
+import 'User/Domain/Usecases/login_usecase.dart';
+import 'User/Domain/Usecases/signIn_usecase.dart';
 import 'User/presentation/bloc/user_bloc.dart';
 import 'core/Network/networl_info.dart';
 
